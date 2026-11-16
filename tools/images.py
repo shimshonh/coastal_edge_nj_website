@@ -54,7 +54,6 @@ Z = {
  'corner-street': ('6fbaf91e5324bb1d726a471081447910', dict(sky=True, warm=1.015)),
  'aerial-beach':  ('fe72cc7beab6eb4989467a795acf3dd2', dict(sky=True, warm=1.01)),
  'aerial-town':   ('b5d469f0c4251da25f0d7cbdfd831276', dict(sky=True, warm=1.015)),
- 'beach-path':    ('f7f9022aca3532a41588b6001e2e821f', dict(sky=True, warm=1.02)),
  'kitchen':       ('b928d4a0be167ecc6768628e45dd4392', dict(warm=1.012, sat=1.08, lift=0.04)),
  'pendant':       ('0671fe02170f6eaf80c777bc1b0b3b6d', dict(warm=1.012, sat=1.06, lift=0.03)),
  'lobby':         ('61de4c60817efdd34cd1208bf0ad0027', dict(warm=1.012, sat=1.08, lift=0.04)),

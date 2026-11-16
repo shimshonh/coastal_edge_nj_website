@@ -136,7 +136,7 @@
       <a class="arrow-link" href="/gallery/">Open the gallery</a>
     </div>
     <div class="mosaic reveal" data-gallery>
-      {% for name, alt, cat, tag in [gallery[1], gallery[3], gallery[5], gallery[7], gallery[9]] %}
+      {% for name, alt, cat, tag in [gallery_by['front-wide'], gallery_by['living-2'], gallery_by['lobby'], gallery_by['living-1'], gallery_by['aerial-town']] %}
       <a href="{{ large(name) }}" class="m{{ loop.index }}" data-caption="{{ alt }}{% if tag %} ({{ tag }}){% endif %}">{{ pic(name, alt, '', '(min-width: 900px) 40vw, 92vw') }}{% if tag %}<span class="tag">{{ tag }}</span>{% endif %}</a>
       {% endfor %}
     </div>

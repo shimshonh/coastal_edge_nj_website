@@ -130,7 +130,7 @@ if os.path.exists(DIST): shutil.rmtree(DIST)
 shutil.copytree(os.path.join(SRC, "static"), DIST)
 common = dict(site=S, nav=D.NAV, plans=D.PLANS, units=units, counts=counts, featured=featured, amenities=D.AMENITIES,
               amenity_list=D.AMENITY_LIST, finishes=D.FINISHES, nearby=D.NEARBY, drives=D.DRIVES, faq=D.FAQ,
-              gallery=D.GALLERY, year=datetime.date.today().year,
+              gallery=D.GALLERY, gallery_by={g[0]: g for g in D.GALLERY}, year=datetime.date.today().year,
               client_data=Markup(json.dumps({"units": client_units, "plans": client_plans}, separators=(",", ":"))))
 for pg in PAGES:
     out = os.path.join(DIST, pg["path"].lstrip("/"))

@@ -160,7 +160,6 @@ GALLERY = [
     ("corner-bay", "Aerial view of Coastal Edge with the bay in the distance", "Building", ""),
     ("living-1", "Living room with sliding glass doors and a view toward the ocean", "Interiors", "Virtually staged"),
     ("pendant", "Pendant light over the kitchen island", "Interiors", ""),
-    ("beach-path", "Path over the dunes to the Seaside Heights beach", "Location", ""),
     ("living-3", "Living room with built in cabinetry", "Interiors", "Virtually staged"),
     ("front-bay", "Coastal Edge from above with the town and Barnegat Bay behind", "Building", ""),
     ("render-pool", "Rendering of the heated indoor pool", "Amenities", "Rendering"),
