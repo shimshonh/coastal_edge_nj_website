@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+{{ m.page_hero('Floor plans', 'Ten layouts to choose from', 'Two bedrooms plus a den or three bedrooms, from 1,303 to 1,580 square feet, each with its own deck.', 'living-1', 'Living room with sliding doors to the deck (virtually staged)') }}
+<section class="section">
+  <div class="wrap">
+    <div class="filters" data-plan-filters>
+      <div class="chips" role="group" aria-label="Bedrooms">
+        <button type="button" class="chip on" data-p-beds="all">All plans</button>
+        <button type="button" class="chip" data-p-beds="2den">2 Bedroom + Den</button>
+        <button type="button" class="chip" data-p-beds="3">3 Bedroom</button>
+      </div>
+    </div>
+    <div class="plan-grid" data-plan-grid>
+      {% for p in plans %}{{ m.plan_card(p) }}{% endfor %}
+    </div>
+    <div class="keyplan reveal">
+      <div>
+        <p class="eyebrow">Where each plan sits</p>
+        <h2>The floor at a glance</h2>
+        <p>Plans 03 to 07 face east toward the ocean. Plans 08, 09, 10 and 01 are on the west side toward the bay, and plan 02 is on the north side. Plans 09 and 10 are on the fourth and fifth floors.</p>
+        <a class="btn btn-ink" href="/availability/">Check availability</a>
+      </div>
+      <img src="/img/brand/keyplan.webp" width="630" height="417" alt="Key plan showing where floor plans 1 to 10 sit on a typical floor" loading="lazy">
+    </div>
+  </div>
+</section>
+{% endblock %}

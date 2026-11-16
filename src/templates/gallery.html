@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+{{ m.page_hero('Gallery', 'Coastal Edge in pictures', 'Real photos of the building and finished residences. Renderings and staged photos are labeled.', 'corner-bay', 'Aerial view of Coastal Edge with Barnegat Bay in the distance') }}
+<section class="section">
+  <div class="wrap">
+    <div class="filters" data-gallery-filters>
+      <div class="chips" role="group" aria-label="Category">
+        <button type="button" class="chip on" data-g="all">All</button>
+        {% for c in ['Building', 'Interiors', 'Amenities', 'Location'] %}<button type="button" class="chip" data-g="{{ c }}">{{ c }}</button>{% endfor %}
+      </div>
+    </div>
+    <div class="masonry" data-gallery>
+      {% for name, alt, cat, tag in gallery %}
+      <a href="{{ large(name) }}" data-cat="{{ cat }}" data-caption="{{ alt }}{% if tag %} ({{ tag }}){% endif %}">{{ pic(name, alt, '', '(min-width: 900px) 32vw, 92vw') }}{% if tag %}<span class="tag">{{ tag }}</span>{% endif %}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

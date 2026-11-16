@@ -1,0 +1,446 @@
+{
+ "site": {
+  "name": "Coastal Edge",
+  "phone_display": "732-392-6688",
+  "email": "info@coastaledgenj.com",
+  "street": "401 Boulevard",
+  "city": "Seaside Heights",
+  "state": "NJ",
+  "zip": "08751",
+  "tour_3d": "https://kuula.co/share/hfWdk/collection/7bf7K",
+  "updated": "November 2026"
+ },
+ "summary": "36 residences on floors 2 to 5 (floors 2 and 3 have plans 1 to 8, floors 4 and 5 have plans 1 to 10). Construction is complete and homes are ready for move in. One block from the beach and boardwalk.",
+ "counts": {
+  "available": 21,
+  "under_contract": 2,
+  "sold": 13
+ },
+ "plans": [
+  {
+   "plan": "Plan 01",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1397,
+   "deck_sqft": 125,
+   "exposure": "Northwest corner",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-1/"
+  },
+  {
+   "plan": "Plan 02",
+   "bedrooms": "2 Bedroom + Den",
+   "baths": 2,
+   "interior_sqft": 1460,
+   "deck_sqft": 135,
+   "exposure": "North",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-2/"
+  },
+  {
+   "plan": "Plan 03",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1469,
+   "deck_sqft": 346,
+   "exposure": "Northeast corner, ocean side",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-3/"
+  },
+  {
+   "plan": "Plan 04",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1383,
+   "deck_sqft": 217,
+   "exposure": "East, ocean side",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-4/"
+  },
+  {
+   "plan": "Plan 05",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1383,
+   "deck_sqft": 217,
+   "exposure": "East, ocean side",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-5/"
+  },
+  {
+   "plan": "Plan 06",
+   "bedrooms": "2 Bedroom + Den",
+   "baths": 2,
+   "interior_sqft": 1371,
+   "deck_sqft": 148,
+   "exposure": "East, ocean side",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-6/"
+  },
+  {
+   "plan": "Plan 07",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1344,
+   "deck_sqft": 252,
+   "exposure": "Southeast corner, ocean side",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-7/"
+  },
+  {
+   "plan": "Plan 08",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1396,
+   "deck_sqft": 120,
+   "exposure": "Southwest corner",
+   "floors": "Floors 2 to 5",
+   "page": "/floor-plans/plan-8/"
+  },
+  {
+   "plan": "Plan 09",
+   "bedrooms": "3 Bedroom",
+   "baths": 2,
+   "interior_sqft": 1303,
+   "deck_sqft": 138,
+   "exposure": "West, bay side",
+   "floors": "Floors 4 and 5",
+   "page": "/floor-plans/plan-9/"
+  },
+  {
+   "plan": "Plan 10",
+   "bedrooms": "3 Bedroom",
+   "baths": 2.5,
+   "interior_sqft": 1580,
+   "deck_sqft": 69,
+   "exposure": "West, bay side",
+   "floors": "Floors 4 and 5",
+   "page": "/floor-plans/plan-10/"
+  }
+ ],
+ "units": [
+  {
+   "unit": 201,
+   "plan": "Plan 01",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 202,
+   "plan": "Plan 02",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 203,
+   "plan": "Plan 03",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 204,
+   "plan": "Plan 04",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 205,
+   "plan": "Plan 05",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 206,
+   "plan": "Plan 06",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 207,
+   "plan": "Plan 07",
+   "status": "Available",
+   "listed_price": "$899,000"
+  },
+  {
+   "unit": 208,
+   "plan": "Plan 08",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 301,
+   "plan": "Plan 01",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 302,
+   "plan": "Plan 02",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 303,
+   "plan": "Plan 03",
+   "status": "Under contract",
+   "listed_price": null
+  },
+  {
+   "unit": 304,
+   "plan": "Plan 04",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 305,
+   "plan": "Plan 05",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 306,
+   "plan": "Plan 06",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 307,
+   "plan": "Plan 07",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 308,
+   "plan": "Plan 08",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 401,
+   "plan": "Plan 01",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 402,
+   "plan": "Plan 02",
+   "status": "Under contract",
+   "listed_price": null
+  },
+  {
+   "unit": 403,
+   "plan": "Plan 03",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 404,
+   "plan": "Plan 04",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 405,
+   "plan": "Plan 05",
+   "status": "Available",
+   "listed_price": "$789,000"
+  },
+  {
+   "unit": 406,
+   "plan": "Plan 06",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 407,
+   "plan": "Plan 07",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 408,
+   "plan": "Plan 08",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 409,
+   "plan": "Plan 09",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 410,
+   "plan": "Plan 10",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 501,
+   "plan": "Plan 01",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 502,
+   "plan": "Plan 02",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 503,
+   "plan": "Plan 03",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 504,
+   "plan": "Plan 04",
+   "status": "Available",
+   "listed_price": "$874,900"
+  },
+  {
+   "unit": 505,
+   "plan": "Plan 05",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 506,
+   "plan": "Plan 06",
+   "status": "Available",
+   "listed_price": null
+  },
+  {
+   "unit": 507,
+   "plan": "Plan 07",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 508,
+   "plan": "Plan 08",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 509,
+   "plan": "Plan 09",
+   "status": "Sold",
+   "listed_price": null
+  },
+  {
+   "unit": 510,
+   "plan": "Plan 10",
+   "status": "Available",
+   "listed_price": null
+  }
+ ],
+ "amenities": [
+  "Heated indoor pool",
+  "Sauna",
+  "Rooftop observation deck",
+  "Fitness center",
+  "Recreation room",
+  "Business center with conference room",
+  "Pet wash station",
+  "Furnished lobby",
+  "Elevator",
+  "Assigned covered garage parking",
+  "EV charging compatible parking",
+  "Private deck with every residence"
+ ],
+ "finishes": [
+  "Interiors by HH Designers",
+  "Open kitchens with a waterfall island",
+  "Stainless steel appliances and gas range",
+  "Sliding glass doors to a private deck",
+  "Laundry in every residence",
+  "Primary suite with private bath",
+  "Smart lock entry",
+  "10 year new home warranty"
+ ],
+ "nearby": [
+  "Seaside Heights beach (One block east)",
+  "Seaside Heights Boardwalk (One block east)",
+  "Casino Pier and Breakwater Beach (On the boardwalk)",
+  "Barnegat Bay (A few blocks west)",
+  "Klee's Bar and Grill (On the Boulevard)",
+  "The Sawmill (On the boardwalk in Seaside Park)",
+  "Beachcomber Bar and Grill (On the boardwalk)",
+  "Hooks Bar and Grill (In town)",
+  "Community center and boat rentals (Bay side)"
+ ],
+ "drives": [
+  "Trenton: 49 miles",
+  "Atlantic City: 61 miles",
+  "Philadelphia: 65 miles",
+  "New York City: 83 miles",
+  "Newark Airport (EWR): 70 miles",
+  "Philadelphia Airport (PHL): 74 miles"
+ ],
+ "faq": [
+  {
+   "q": "Where is Coastal Edge?",
+   "a": "Coastal Edge is at 401 Boulevard in Seaside Heights, New Jersey, one block from the beach and the boardwalk and a few blocks from Barnegat Bay."
+  },
+  {
+   "q": "Is the building finished?",
+   "a": "Yes. Construction is complete and residences are ready for move in. You can tour finished homes and the common areas."
+  },
+  {
+   "q": "What sizes are the residences?",
+   "a": "There are 36 residences on floors two through five. Layouts are two bedrooms plus a den or three bedrooms, from about 1,303 to 1,580 square feet inside, and every home has a private deck from about 69 to 346 square feet."
+  },
+  {
+   "q": "Which residences are available and what do they cost?",
+   "a": "The availability page shows the status of every residence. Prices are shown for the homes that are currently listed. For the others, send a request and the sales team will reply with current pricing."
+  },
+  {
+   "q": "What amenities does the building have?",
+   "a": "A heated indoor pool and sauna, a rooftop observation deck, a fitness center, a recreation room, a business center with a conference room, a pet wash station, a furnished lobby and an elevator."
+  },
+  {
+   "q": "Is parking included?",
+   "a": "Each residence comes with assigned covered parking in the building garage. The garage is compatible with electric vehicle charging. Ask the sales team about the space that goes with a specific residence."
+  },
+  {
+   "q": "What are the monthly association fees?",
+   "a": "Fees depend on the residence and are roughly $700 a month for the homes currently listed. The sales team can give you the exact figure and what it covers."
+  },
+  {
+   "q": "Is there a property tax program?",
+   "a": "The building is part of a long term tax abatement agreement with the Borough of Seaside Heights. Ask the sales team for the current figures for the residence you are looking at."
+  },
+  {
+   "q": "Is there a warranty?",
+   "a": "Yes. Residences are sold with a 10 year new home warranty."
+  },
+  {
+   "q": "Can I rent out my residence?",
+   "a": "Rentals are governed by the condominium association's rules and by Borough of Seaside Heights requirements. The sales team can send you the current rental policy."
+  },
+  {
+   "q": "Are pets allowed?",
+   "a": "The building has a pet wash station. Pet rules are set by the condominium association, so ask the sales team for the current policy."
+  },
+  {
+   "q": "Can I tour the building?",
+   "a": "Yes. Call 732-392-6688 or use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."
+  },
+  {
+   "q": "I am working with a real estate agent. Is that okay?",
+   "a": "Yes. Buyers working with an agent are welcome. Have your agent contact the sales team to set up a showing."
+  }
+ ],
+ "pages": {
+  "availability": "/availability/",
+  "floor_plans": "/floor-plans/",
+  "amenities": "/amenities/",
+  "gallery": "/gallery/",
+  "neighborhood": "/neighborhood/",
+  "faq": "/faq/",
+  "schedule_a_tour": "/contact/",
+  "brochure": "/brochure/"
+ }
+}

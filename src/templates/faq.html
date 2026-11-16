@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+<section class="plain-hero"><div class="wrap narrow"><p class="eyebrow">Questions and answers</p><h1>Good to know</h1><p>Quick answers to what buyers ask most. For anything else, ask the assistant in the corner or call {{ site.phone_display }}.</p></div></section>
+<section class="section tight">
+  <div class="wrap narrow">
+    <div class="accordion">
+      {% for q, a in faq %}
+      <details{% if loop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>
+      {% endfor %}
+    </div>
+    <div class="ask-box">
+      <h2>Still have a question?</h2>
+      <div class="btn-row center">
+        <button class="btn btn-ink" type="button" data-chat-open>Ask the assistant</button>
+        <a class="btn btn-line" href="/contact/">Contact the sales team</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

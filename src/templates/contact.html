@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% set hide_cta = true %}
+{% block content %}
+<section class="plain-hero"><div class="wrap"><p class="eyebrow">Visit Coastal Edge</p><h1>Schedule a tour</h1><p>Pick a day that works and the sales team will confirm a time with you.</p></div></section>
+<section class="section tight">
+  <div class="wrap contact-grid">
+    <div class="form-card">
+      {% call m.inline_form('tour', 'Request my tour') %}
+      <div class="field-row">
+        <label class="field"><span>Preferred day</span><input name="date" type="date"></label>
+        <label class="field"><span>Time of day</span><select name="time"><option value="">No preference</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Interested in</span><select name="interest"><option value="">Not sure yet</option><option>2 Bedroom + Den</option><option>3 Bedroom</option><option>Retail space</option></select></label>
+        <label class="field"><span>When are you looking to buy?</span><select name="timing"><option value="">Select</option><option>Right away</option><option>Within 3 months</option><option>3 to 6 months</option><option>Just looking</option></select></label>
+      </div>
+      <label class="field"><span>Message (optional)</span><textarea name="message" rows="3"></textarea></label>
+      <label class="check"><input type="checkbox" name="agent" value="yes"> I am working with a real estate agent</label>
+      {% endcall %}
+    </div>
+    <aside class="contact-side">
+      <figure>{{ pic('hero-corner', 'Coastal Edge building at 401 Boulevard', '', '(min-width: 900px) 40vw, 92vw', false) }}</figure>
+      <dl class="contact-list">
+        <div><dt>Call</dt><dd><a href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd></div>
+        <div><dt>Visit</dt><dd>{{ site.street }}<br>{{ site.city }}, {{ site.state }} {{ site.zip }}<br><a href="{{ site.maps_url }}" target="_blank" rel="noopener">Get directions</a></dd></div>
+      </dl>
+      <a class="arrow-link" href="{{ site.tour_3d }}" data-tour>Or take the 3D tour now</a>
+    </aside>
+  </div>
+</section>
+{% endblock %}

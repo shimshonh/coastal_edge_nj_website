@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block head %}<link rel="preload" as="image" href="/img/photos/hero-corner-1536.webp" imagesrcset="/img/photos/hero-corner-800.webp 800w, /img/photos/hero-corner-1536.webp 1536w" imagesizes="100vw" fetchpriority="high">{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-slides" data-hero>
+    {{ pic('hero-corner', 'Coastal Edge condominium building on the Boulevard in Seaside Heights, New Jersey', 'on', '100vw', false) }}
+    {{ pic('front-wide', 'Front of Coastal Edge with Barnegat Bay behind the building', '', '100vw') }}
+    {{ pic('aerial-beach', 'The beach and boardwalk one block from Coastal Edge', '', '100vw') }}
+  </div>
+  <div class="hero-shade"></div>
+  <div class="wrap hero-in">
+    <p class="eyebrow light">Seaside Heights, New Jersey</p>
+    <h1>New condominiums <br class="wide">one block from the beach</h1>
+    <p class="hero-sub">Two and three bedroom residences with private decks, a heated indoor pool and a rooftop deck. Finished and ready for move in.</p>
+    <div class="btn-row">
+      <a class="btn btn-clay" href="/availability/">See what is available</a>
+      <a class="btn btn-ghost" href="/contact/">Schedule a tour</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="wrap stats">
+      <div><strong>36</strong><span>Residences</span></div>
+      <div><strong>2 + Den, 3</strong><span>Bedrooms</span></div>
+      <div><strong>1,303 to 1,580</strong><span>Square feet</span></div>
+      <div><strong>1 block</strong><span>To the beach</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section intro">
+  <div class="wrap split">
+    <div class="split-text reveal">
+      <p class="eyebrow">Welcome to Coastal Edge</p>
+      <h2>A new home at the shore, built for every season</h2>
+      <p>Coastal Edge is a new five story building at 401 Boulevard, between the ocean and Barnegat Bay. Thirty six residences sit above the street, each with an open kitchen, wide sliding doors and a private deck.</p>
+      <p>Come down for the summer or stay all year. The pool is indoors and heated, parking is covered, and the beach and boardwalk are a short walk from the lobby.</p>
+      <div class="btn-row">
+        <a class="btn btn-ink" href="/floor-plans/">Explore floor plans</a>
+        <a class="arrow-link" href="{{ site.tour_3d }}" data-tour>Take the 3D tour</a>
+      </div>
+    </div>
+    <div class="split-media collage reveal">
+      {{ pic('kitchen', 'Kitchen with a waterfall island at Coastal Edge', 'c-main', '(min-width: 900px) 45vw, 92vw') }}
+      {{ pic('pendant', 'Pendant light above the kitchen island', 'c-small', '(min-width: 900px) 20vw, 40vw') }}
+    </div>
+  </div>
+</section>
+
+<section class="section tint">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Availability</p>
+        <h2>{{ counts.A }} residences available now</h2>
+      </div>
+      <a class="arrow-link" href="/availability/">See every residence</a>
+    </div>
+    <div class="feature-grid">
+      {% for u in featured %}
+      <article class="feature-card reveal">
+        <a class="feature-plan" href="/floor-plans/{{ u.plan.slug }}/">{{ pic('plan-' ~ u.plan.n, 'Floor plan for residence ' ~ u.num, '', '(min-width: 900px) 30vw, 90vw') }}</a>
+        <div class="feature-body">
+          <div class="feature-top"><h3>Residence {{ u.num }}</h3>{{ m.status_pill(u) }}</div>
+          <p class="plan-line">{{ u.plan.beds_label }} <span>|</span> {{ u.plan.baths_label }} <span>|</span> {{ u.plan.sf|num }} sf</p>
+          <p class="muted">{{ u.plan.exposure_label }}. {{ u.plan.deck }} sf deck.</p>
+          <div class="feature-foot">
+            <strong class="price">{{ u.price|money }}</strong>
+            <button class="btn btn-ink btn-sm" type="button" data-inquire data-kind="tour" data-unit="{{ u.num }}" data-plan="{{ u.plan.name }}">Tour this home</button>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="note reveal">More residences are available than the ones shown here. <a href="/availability/">View the full list</a> or <button class="link-btn" type="button" data-inquire data-kind="pricing">request the price sheet</button>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Floor plans</p>
+        <h2>Ten layouts, every one with a private deck</h2>
+      </div>
+      <a class="arrow-link" href="/floor-plans/">Compare all plans</a>
+    </div>
+  </div>
+  <div class="rail" data-rail>
+    {% for p in plans %}{{ m.plan_card(p) }}{% endfor %}
+  </div>
+</section>
+
+<section class="band">
+  {{ pic('aerial-beach', 'Aerial view over the ocean, beach and boardwalk toward Coastal Edge and Barnegat Bay', 'band-bg', '100vw') }}
+  <div class="band-shade"></div>
+  <div class="wrap band-in reveal">
+    <p class="eyebrow light">The location</p>
+    <h2>The ocean in front of you, the bay behind you</h2>
+    <p>The beach and the boardwalk are one block east. Barnegat Bay is a few blocks west. Everything in between is yours to walk.</p>
+    <a class="btn btn-ghost" href="/neighborhood/">Explore the neighborhood</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Amenities</p>
+        <h2>More than a place at the beach</h2>
+      </div>
+      <a class="arrow-link" href="/amenities/">All amenities</a>
+    </div>
+    <div class="amenity-grid">
+      {% for a in amenities[:3] %}
+      <figure class="amenity-tile reveal">
+        {{ pic(a.img, a.title ~ (' (rendering)' if a.render else ''), '', '(min-width: 900px) 32vw, 92vw') }}
+        {% if a.render %}<span class="tag">Rendering</span>{% endif %}
+        <figcaption><h3>{{ a.title }}</h3><p>{{ a.text }}</p></figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    <ul class="chip-list reveal">
+      {% for a in amenity_list %}<li>{{ a }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section tint">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Gallery</p>
+        <h2>See the real thing</h2>
+      </div>
+      <a class="arrow-link" href="/gallery/">Open the gallery</a>
+    </div>
+    <div class="mosaic reveal" data-gallery>
+      {% for name, alt, cat, tag in [gallery[1], gallery[3], gallery[5], gallery[7], gallery[9]] %}
+      <a href="{{ large(name) }}" class="m{{ loop.index }}" data-caption="{{ alt }}{% if tag %} ({{ tag }}){% endif %}">{{ pic(name, alt, '', '(min-width: 900px) 40vw, 92vw') }}{% if tag %}<span class="tag">{{ tag }}</span>{% endif %}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap duo">
+    <article class="duo-card reveal">
+      <div class="duo-media">{{ pic('living-2', 'Living room and kitchen in a finished residence (virtually staged)', '', '(min-width: 900px) 45vw, 92vw') }}<span class="tag">Virtually staged</span></div>
+      <div class="duo-body">
+        <p class="eyebrow">3D tour</p>
+        <h3>Walk through from your couch</h3>
+        <p>Move room to room through a finished residence and the common areas.</p>
+        <a class="btn btn-ink" href="{{ site.tour_3d }}" data-tour>Start the 3D tour</a>
+      </div>
+    </article>
+    <article class="duo-card reveal">
+      <div class="duo-media brochure-media">{{ pic('brochure-cover', 'Cover of the Coastal Edge brochure', '', '(min-width: 900px) 45vw, 92vw') }}</div>
+      <div class="duo-body">
+        <p class="eyebrow">Brochure</p>
+        <h3>Everything in one PDF</h3>
+        <p>Floor plans, amenities and the neighborhood, ready to share with family.</p>
+        <a class="btn btn-ink" href="/brochure/">Get the brochure</a>
+      </div>
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+<section class="plan-page">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/floor-plans/">Floor plans</a> <span>/</span> {{ plan.name }}</nav>
+    <div class="plan-layout">
+      <div class="plan-view" data-gallery>
+        <a class="plan-big" href="{{ large('plan-' ~ plan.n) }}" data-caption="{{ plan.name }} floor plan">{{ pic('plan-' ~ plan.n, 'Floor plan drawing for ' ~ plan.name ~ ': ' ~ plan.beds_label ~ ', ' ~ plan.sf ~ ' square feet', '', '(min-width: 900px) 60vw, 94vw', false) }}<span class="zoom">Tap to enlarge</span></a>
+        <div class="views">
+          {% for i in [1, 2, 3] %}
+          <a href="/img/plans/plan-{{ plan.n }}-3d-{{ i }}.webp" data-caption="{{ plan.name }} 3D view {{ i }}">{{ pic('plan-' ~ plan.n ~ '-3d-' ~ i, '3D view ' ~ i ~ ' of ' ~ plan.name, '', '30vw') }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <aside class="plan-side">
+        <p class="eyebrow">{{ plan.exposure_label }}</p>
+        <h1>{{ plan.name }}</h1>
+        <p class="plan-line big">{{ plan.beds_label }} <span>|</span> {{ plan.baths_label }}</p>
+        <p>{{ plan.note }}</p>
+        <dl class="sf sf-lg">
+          <div><dt>Interior</dt><dd>{{ plan.sf|num }} sf</dd></div>
+          <div><dt>Deck</dt><dd>{{ plan.deck|num }} sf</dd></div>
+          <div><dt>Total</dt><dd>{{ plan.total|num }} sf</dd></div>
+        </dl>
+        <div class="btn-col">
+          <button class="btn btn-clay" type="button" data-inquire data-kind="plan" data-plan="{{ plan.name }}" data-download="/docs/coastal-edge-floor-plan-{{ plan.n }}.pdf">Download the plan PDF</button>
+          <button class="btn btn-line" type="button" data-inquire data-kind="tour" data-plan="{{ plan.name }}">Tour this layout</button>
+        </div>
+        <h2 class="side-h">Residences with this plan</h2>
+        <ul class="plan-units">
+          {% for u in plan.units|sort(attribute='num', reverse=true) %}
+          <li class="status-{{ u.status }}">
+            <span><strong>{{ u.num }}</strong> <small>Floor {{ u.floor }}</small></span>
+            {{ m.price_cell(u) }}
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="fineprint">{{ plan.floors }}. Sizes are approximate.</p>
+      </aside>
+    </div>
+    <div class="plan-pager">
+      {% set prev = plans[plan.n - 2] if plan.n > 1 else plans[-1] %}
+      {% set next = plans[plan.n] if plan.n < plans|length else plans[0] %}
+      <a href="/floor-plans/{{ prev.slug }}/">&#8249; {{ prev.name }}</a>
+      <a href="/floor-plans/">All plans</a>
+      <a href="/floor-plans/{{ next.slug }}/">{{ next.name }} &#8250;</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

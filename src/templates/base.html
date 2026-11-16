@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ desc }}">
+{% if noindex %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Coastal Edge">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ desc }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ site.domain }}/img/photos/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#22323b">
+<link rel="icon" href="/img/brand/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/brand/apple-touch-icon.png">
+<link rel="preload" href="/fonts/belleza-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css">
+{% if jsonld %}<script type="application/ld+json">{{ jsonld }}</script>{% endif %}
+
+{% block head %}{% endblock %}
+</head>
+<body class="{{ body_class|default('inner') }}">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="header-in">
+    <a class="brand" href="/" aria-label="Coastal Edge home">
+      <img class="logo logo-white" src="/img/brand/logo-white.png" width="720" height="99" alt="Coastal Edge">
+      <img class="logo logo-color" src="/img/brand/logo-color.png" width="720" height="99" alt="" aria-hidden="true">
+    </a>
+    <nav class="nav" aria-label="Main">
+      {% for label, href in nav %}
+      <a href="{{ href }}"{% if path.startswith(href) %} aria-current="page"{% endif %}>{{ label }}</a>
+      {% endfor %}
+    </nav>
+    <div class="header-cta">
+      <a class="header-phone" href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a>
+      <a class="btn btn-clay btn-sm" href="/contact/">Schedule a tour</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr">Menu</span><i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" hidden>
+  <nav aria-label="Mobile">
+    <a href="/">Home</a>
+    {% for label, href in nav %}
+    <a href="{{ href }}">{{ label }}</a>
+    {% endfor %}
+    <a href="/brochure/">Brochure</a>
+    <a href="/contact/">Schedule a tour</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <a class="btn btn-clay" href="tel:{{ site.phone_tel }}">Call {{ site.phone_display }}</a>
+    <p>{{ site.street }}, {{ site.city }}, {{ site.state }} {{ site.zip }}</p>
+  </div>
+</div>
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+{% if not hide_cta %}
+<section class="cta-band">
+  {{ pic('ocean', 'The ocean at Seaside Heights', 'cta-bg', '100vw') }}
+  <div class="wrap cta-in">
+    <p class="eyebrow light">Visit Coastal Edge</p>
+    <h2>See it in person</h2>
+    <p>Walk through finished residences and the common areas. Tours are private and by appointment.</p>
+    <div class="btn-row center">
+      <a class="btn btn-clay" href="/contact/">Schedule a tour</a>
+      <a class="btn btn-ghost" href="/brochure/">Get the brochure</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img class="footer-logo" src="/img/brand/logo-white.png" width="720" height="99" alt="Coastal Edge" loading="lazy">
+      <p class="footer-addr">{{ site.street }}<br>{{ site.city }}, {{ site.state }} {{ site.zip }}</p>
+      <p><a href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a><br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p class="social">
+        <a href="{{ site.instagram }}" rel="noopener" target="_blank">Instagram</a>
+        <a href="{{ site.facebook }}" rel="noopener" target="_blank">Facebook</a>
+        <a href="{{ site.tiktok }}" rel="noopener" target="_blank">TikTok</a>
+      </p>
+    </div>
+    <div>
+      <h3>Residences</h3>
+      <a href="/availability/">Availability</a>
+      <a href="/floor-plans/">Floor plans</a>
+      <a href="/brochure/">Brochure</a>
+      <a href="{{ site.tour_3d }}" data-tour>3D tour</a>
+    </div>
+    <div>
+      <h3>The building</h3>
+      <a href="/amenities/">Amenities</a>
+      <a href="/gallery/">Gallery</a>
+      <a href="/neighborhood/">Neighborhood</a>
+      <a href="/faq/">Questions and answers</a>
+    </div>
+    <div>
+      <h3>Visit</h3>
+      <a href="/contact/">Schedule a tour</a>
+      <a href="{{ site.maps_url }}" rel="noopener" target="_blank">Directions</a>
+      <a href="#" data-chat-open>Ask a question</a>
+    </div>
+  </div>
+  <div class="wrap legal"><div class="legal-in">
+    <p>Sizes are approximate. Some images are artist renderings or virtually staged and are labeled that way. Availability and prices can change without notice. Full terms are in the Public Offering Statement, available from the sales team. Sponsor: {{ site.sponsor }}, {{ site.sponsor_address }}.</p>
+    <p>Equal Housing Opportunity. We do business in accordance with the Fair Housing Act.</p>
+    <p>&copy; {{ year }} Coastal Edge. All rights reserved.</p>
+  </div></div>
+</footer>
+
+<div class="mobile-bar">
+  <a href="tel:{{ site.phone_tel }}">Call</a>
+  <a href="/contact/" class="primary">Schedule a tour</a>
+</div>
+
+<dialog class="modal" id="lead-modal" aria-labelledby="lead-title">
+  <form class="lead-form modal-card" data-lead-form novalidate>
+    <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+    <div data-form-body>
+      <p class="eyebrow" data-lead-eyebrow>Coastal Edge</p>
+      <h2 id="lead-title" data-lead-title>Request pricing</h2>
+      <p class="lead-sub" data-lead-sub>Tell us where to reach you and the sales team will reply shortly.</p>
+      <input type="hidden" name="kind" value="pricing">
+      <input type="hidden" name="unit" value="">
+      <input type="hidden" name="plan" value="">
+      <input type="hidden" name="page" value="{{ path }}">
+      <div class="hp" aria-hidden="true"><label>Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+      <div class="field-row">
+        <label class="field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
+        <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+      </div>
+      <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span>Anything we should know? (optional)</span><textarea name="message" rows="2"></textarea></label>
+      <p class="form-error" data-error hidden></p>
+      <button class="btn btn-clay btn-block" type="submit" data-submit>Send request</button>
+      <p class="fineprint">By sending this form you agree to be contacted about Coastal Edge.</p>
+    </div>
+    <div class="form-done" data-form-done hidden>
+      <div class="check" aria-hidden="true"></div>
+      <h2>Thank you</h2>
+      <p data-done-text>The sales team will be in touch shortly.</p>
+      <a class="btn btn-clay btn-block" data-download-link hidden target="_blank" rel="noopener">Download the PDF</a>
+      <button class="btn btn-line btn-block" type="button" data-close>Close</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="modal modal-wide" id="tour-modal" aria-label="3D tour">
+  <div class="modal-card tour-card">
+    <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+    <div class="tour-frame" data-tour-frame></div>
+  </div>
+</dialog>
+
+<dialog class="lightbox" id="lightbox" aria-label="Photo">
+  <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous">&#8249;</button>
+  <figure><img alt="" data-lb-img><figcaption data-lb-cap></figcaption></figure>
+  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next">&#8250;</button>
+</dialog>
+
+<div class="chat" data-chat>
+  <button class="chat-launch" type="button" data-chat-toggle aria-expanded="false" aria-controls="chat-panel">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+    <span>Ask a question</span>
+  </button>
+  <section class="chat-panel" id="chat-panel" hidden aria-label="Chat with the Coastal Edge assistant">
+    <header>
+      <div><strong>Coastal Edge assistant</strong><small>AI answers, usually within seconds</small></div>
+      <button type="button" data-chat-toggle aria-label="Close chat">&times;</button>
+    </header>
+    <div class="chat-log" data-chat-log aria-live="polite"></div>
+    <div class="chat-chips" data-chat-chips>
+      <button type="button">What is available?</button>
+      <button type="button">How far is the beach?</button>
+      <button type="button">What amenities are there?</button>
+      <button type="button">I want to schedule a tour</button>
+    </div>
+    <form data-chat-form>
+      <input type="text" name="q" placeholder="Type your question" autocomplete="off" maxlength="600" aria-label="Your question">
+      <button type="submit" aria-label="Send">&#10148;</button>
+    </form>
+    <p class="chat-note">This assistant is automated and can make mistakes. Please confirm details with the sales team.</p>
+  </section>
+</div>
+
+<script>window.CE = {{ client_data }}; window.CE.tour = "{{ site.tour_3d }}"; window.CE.phone = "{{ site.phone_display }}";</script>
+<script src="/js/site.js" defer></script>
+{% if site.gtm_id %}
+<script>
+window.addEventListener('load', function () { setTimeout(function () {
+  window.dataLayer = window.dataLayer || []; window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+  var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id={{ site.gtm_id }}'; document.head.appendChild(s);
+}, 1500); });
+</script>
+{% endif %}
+</body>
+</html>

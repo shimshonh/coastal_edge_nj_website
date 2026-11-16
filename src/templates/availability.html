@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+{{ m.page_hero('Availability', 'Find your residence', 'Updated ' ~ site.updated ~ '. Tap any home to see its plan, size and status.', 'front-wide', 'Front of the Coastal Edge building') }}
+
+<section class="section">
+  <div class="wrap">
+    <div class="avail-stats reveal">
+      <div><strong>{{ counts.A }}</strong><span><i class="dot dot-A"></i>Available</span></div>
+      <div><strong>{{ counts.U }}</strong><span><i class="dot dot-U"></i>Under contract</span></div>
+      <div><strong>{{ counts.S }}</strong><span><i class="dot dot-S"></i>Sold</span></div>
+    </div>
+
+    <div class="stack reveal" aria-label="Building by floor">
+      <div class="stack-head"><span></span>{% for p in plans %}<span>{{ '%02d'|format(p.n) }}</span>{% endfor %}</div>
+      {% for floor in [5, 4, 3, 2] %}
+      <div class="stack-row">
+        <span class="stack-floor" data-n="{{ floor }}">Floor {{ floor }}</span>
+        {% for p in plans %}
+          {% set ns = namespace(u=None) %}
+          {% for u in units if u.floor == floor and u.plan.n == p.n %}{% set ns.u = u %}{% endfor %}
+          {% if ns.u %}<button type="button" class="cell cell-{{ ns.u.status }}" data-unit-open="{{ ns.u.num }}" aria-label="Residence {{ ns.u.num }}, {{ ns.u.status_label }}">{{ ns.u.num }}</button>
+          {% else %}<span class="cell cell-none" aria-hidden="true"></span>{% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+      <p class="stack-note">Columns are floor plans 01 to 10. Plans 09 and 10 are on floors 4 and 5 only. Ocean side plans: 03 to 07.</p>
+    </div>
+
+    <div class="filters reveal" data-filters>
+      <div class="chips" role="group" aria-label="Bedrooms">
+        <button type="button" class="chip on" data-f-beds="all">All layouts</button>
+        <button type="button" class="chip" data-f-beds="2den">2 Bedroom + Den</button>
+        <button type="button" class="chip" data-f-beds="3">3 Bedroom</button>
+      </div>
+      <div class="chips" role="group" aria-label="Floor">
+        <button type="button" class="chip on" data-f-floor="all">Any floor</button>
+        {% for f in [2, 3, 4, 5] %}<button type="button" class="chip" data-f-floor="{{ f }}">Floor {{ f }}</button>{% endfor %}
+      </div>
+      <label class="check-chip"><input type="checkbox" data-f-sold> Show sold</label>
+    </div>
+
+    <div class="unit-table" data-unit-list>
+      <div class="unit-row unit-head" aria-hidden="true"><span>Residence</span><span>Layout</span><span>Interior</span><span>Deck</span><span>Exposure</span><span>Status</span><span>Price</span><span></span></div>
+      {% for u in units|sort(attribute='num') %}
+      <div class="unit-row status-{{ u.status }}" data-beds="{{ u.plan.group }}" data-floor="{{ u.floor }}" data-status="{{ u.status }}" data-row-unit="{{ u.num }}" id="unit-{{ u.num }}">
+        <span class="u-num"><strong>{{ u.num }}</strong><small>Floor {{ u.floor }} <i>|</i> <a href="/floor-plans/{{ u.plan.slug }}/">{{ u.plan.name }}</a></small></span>
+        <span class="u-lay">{{ u.plan.beds_label }}<small>{{ u.plan.baths_label }}</small></span>
+        <span class="u-sf" data-l="Interior">{{ u.plan.sf|num }} sf</span>
+        <span class="u-deck" data-l="Deck">{{ u.plan.deck }} sf</span>
+        <span class="u-exp">{{ u.plan.exposure_label }}</span>
+        <span class="u-status">{{ m.status_pill(u) }}</span>
+        <span class="u-price">{{ m.price_cell(u) }}</span>
+        <span class="u-act"><button class="btn btn-line btn-sm" type="button" data-unit-open="{{ u.num }}">Details</button></span>
+      </div>
+      {% endfor %}
+      <p class="empty" data-empty hidden>No residences match these filters. Try another floor or layout.</p>
+    </div>
+
+    <p class="note">Prices are shown for residences that are currently listed. For any other home, tap Request pricing and the sales team will reply with the current price. Three ground floor retail spaces are also offered. <button class="link-btn" type="button" data-inquire data-kind="retail">Ask about retail space</button>.</p>
+  </div>
+</section>
+
+<dialog class="modal modal-unit" id="unit-modal" aria-labelledby="unit-title">
+  <div class="modal-card unit-card">
+    <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+    <div class="unit-plan"><img alt="" data-u-img></div>
+    <div class="unit-info">
+      <p class="eyebrow" data-u-eyebrow></p>
+      <h2 id="unit-title" data-u-title></h2>
+      <p data-u-pill></p>
+      <dl class="facts">
+        <div><dt>Layout</dt><dd data-u-layout></dd></div>
+        <div><dt>Interior</dt><dd data-u-sf></dd></div>
+        <div><dt>Deck</dt><dd data-u-deck></dd></div>
+        <div><dt>Exposure</dt><dd data-u-exp></dd></div>
+        <div><dt>Price</dt><dd data-u-price></dd></div>
+      </dl>
+      <div class="btn-col">
+        <button class="btn btn-clay" type="button" data-u-primary></button>
+        <a class="btn btn-line" data-u-planlink>View the floor plan</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+{% endblock %}

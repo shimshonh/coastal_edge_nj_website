@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% set hide_cta = true %}
+{% block content %}
+<section class="plain-hero"><div class="wrap"><p class="eyebrow">Brochure</p><h1>Get the Coastal Edge brochure</h1><p>Floor plans, amenities and the neighborhood in one PDF. Tell us where to reach you and the download opens right away.</p></div></section>
+<section class="section tight">
+  <div class="wrap contact-grid">
+    <div class="brochure-preview">
+      {{ pic('brochure-cover', 'Cover of the Coastal Edge brochure', 'cover', '(min-width: 900px) 45vw, 92vw', false) }}
+      <div class="brochure-pages">{% for i in [2, 3, 4] %}{{ pic('brochure-p' ~ i, 'Brochure page ' ~ i, '', '15vw') }}{% endfor %}</div>
+    </div>
+    <div class="form-card" data-download="/docs/coastal-edge-brochure.pdf">
+      <h2>Where should we send it?</h2>
+      {% call m.inline_form('brochure', 'Download the brochure') %}
+      <label class="field"><span>Interested in</span><select name="interest"><option value="">Not sure yet</option><option>2 Bedroom + Den</option><option>3 Bedroom</option></select></label>
+      {% endcall %}
+    </div>
+  </div>
+</section>
+{% endblock %}

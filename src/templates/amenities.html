@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+{{ m.page_hero('Amenities', 'Room to swim, work and unwind', 'Everything is inside the building, open to owners all year.', 'lobby', 'Furnished lobby at Coastal Edge') }}
+<section class="section">
+  <div class="wrap">
+    {% for a in amenities %}
+    <div class="split alt reveal {{ 'flip' if loop.index is even }}">
+      <figure class="split-media">
+        {{ pic(a.img, a.title ~ (' (rendering)' if a.render else ''), '', '(min-width: 900px) 50vw, 92vw') }}
+        {% if a.render %}<span class="tag">Rendering</span>{% endif %}
+      </figure>
+      <div class="split-text">
+        <p class="eyebrow">{{ '%02d'|format(loop.index) }}</p>
+        <h2>{{ a.title }}</h2>
+        <p>{{ a.text }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<section class="section tint">
+  <div class="wrap two-lists">
+    <div class="reveal">
+      <p class="eyebrow">In the building</p>
+      <h2>Shared spaces</h2>
+      <ul class="ticks">{% for a in amenity_list %}<li>{{ a }}</li>{% endfor %}</ul>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">In your home</p>
+      <h2>Finishes and features</h2>
+      <ul class="ticks">{% for a in finishes %}<li>{{ a }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

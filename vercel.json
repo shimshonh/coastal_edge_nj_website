@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "",
+  "installCommand": "npm install --omit=dev",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "functions": { "api/*.js": { "maxDuration": 30 } },
+  "redirects": [
+    { "source": "/wp-content/uploads/2025/02/Coastal_Edge_Unit_:n.pdf", "destination": "/floor-plans/plan-:n/", "permanent": true },
+    { "source": "/wp-content/uploads/2024/04/CE-Book-2024-R3.pdf", "destination": "/brochure/", "permanent": true },
+    { "source": "/wp-content/:path*", "destination": "/", "permanent": false },
+    { "source": "/wp-admin/:path*", "destination": "/", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/(img|fonts|css|js)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }] },
+    { "source": "/docs/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+    ] }
+  ]
+}

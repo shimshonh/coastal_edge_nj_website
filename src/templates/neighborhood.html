@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "_m.html" as m with context %}
+{% block content %}
+{{ m.page_hero('Neighborhood', 'Between the ocean and the bay', 'One block to the beach and the boardwalk. A few blocks to Barnegat Bay.', 'aerial-beach', 'Aerial view over the ocean, beach and boardwalk toward Coastal Edge') }}
+<section class="section">
+  <div class="wrap split">
+    <div class="split-text reveal">
+      <p class="eyebrow">Seaside Heights</p>
+      <h2>Leave the car in the garage</h2>
+      <p>From the lobby it is a short walk east to the sand and the boardwalk, with its rides, arcades and places to eat. Walk west and you reach the bay for sunsets, boating and crabbing.</p>
+      <p>The Boulevard itself has restaurants, coffee and shops, so most days you will not need to drive at all.</p>
+      <a class="btn btn-ink" href="{{ site.maps_url }}" target="_blank" rel="noopener">Open in Google Maps</a>
+    </div>
+    <figure class="split-media reveal">{{ pic('beach-path', 'Path over the dunes to the beach at Seaside Heights', '', '(min-width: 900px) 45vw, 92vw') }}</figure>
+  </div>
+</section>
+<section class="section tint">
+  <div class="wrap near">
+    <div class="reveal">
+      <p class="eyebrow">Close by</p>
+      <h2>What is around the corner</h2>
+      <ul class="near-list">{% for a, b in nearby %}<li><span>{{ a }}</span><small>{{ b }}</small></li>{% endfor %}</ul>
+    </div>
+    <figure class="map reveal">
+      {{ pic('map', 'Map of Seaside Heights showing Coastal Edge between the ocean and Barnegat Bay', '', '(min-width: 900px) 50vw, 92vw') }}
+      <figcaption>{{ site.street }}, {{ site.city }}, {{ site.state }} {{ site.zip }}</figcaption>
+    </figure>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal"><div><p class="eyebrow">Getting here</p><h2>An easy drive from the city</h2></div></div>
+    <div class="drive-grid reveal">{% for a, b in drives %}<div><strong>{{ b }}</strong><span>{{ a }}</span></div>{% endfor %}</div>
+    <div class="mosaic two reveal" data-gallery>
+      <a href="{{ large('aerial-town') }}" data-caption="The beach, boardwalk and town from above">{{ pic('aerial-town', 'Aerial view of the beach, boardwalk and town', '', '(min-width: 900px) 48vw, 92vw') }}</a>
+      <a href="{{ large('front-bay') }}" data-caption="Coastal Edge with Barnegat Bay behind">{{ pic('front-bay', 'Coastal Edge from above with Barnegat Bay behind', '', '(min-width: 900px) 48vw, 92vw') }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
