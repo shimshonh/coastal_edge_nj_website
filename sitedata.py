@@ -9,8 +9,6 @@ SITE = {
     "name": "Coastal Edge",
     "domain": "https://coastaledgenj.com",
     "tagline": "New condominiums one block from the beach",
-    "phone_display": "732-392-6688",
-    "phone_tel": "+17323926688",
     "email": "info@coastaledgenj.com",
     "street": "401 Boulevard",
     "city": "Seaside Heights",
@@ -24,7 +22,7 @@ SITE = {
     "instagram": "https://www.instagram.com/coastaledgenj/",
     "tiktok": "https://www.tiktok.com/@coastaledgenj",
     "gtm_id": "GTM-W3TSTBMQ",
-    "updated": "November 2026",
+    "updated": "November 16, 2026",
 }
 
 EXPOSURE = {
@@ -74,6 +72,12 @@ _STATUS = {
 PUBLIC_PRICES = {207: 899000, 405: 789000, 504: 874900}
 UNIT_NOTES = {504: "Top floor"}
 
+# Tags on the unit list. Use them only for real, recent events and clear them after a month or so.
+# "new" = Just listed (must be available). "sold" = Recently sold (must be sold).
+# 405 relisted 11/13/2026. 504 listed on the MLS in November 2026. 505 closed 11/6/2026.
+UNIT_TAGS = {405: "new", 504: "new", 505: "sold"}
+TAG_LABEL = {"new": "Just listed", "sold": "Recently sold"}
+
 STATUS_LABEL = {"A": "Available", "U": "Under contract", "S": "Sold"}
 UNITS = []
 for floor, row in _STATUS.items():
@@ -85,11 +89,14 @@ for floor, row in _STATUS.items():
             "status_label": STATUS_LABEL[s],
             "price": PUBLIC_PRICES.get(num) if s == "A" else None,
             "note": UNIT_NOTES.get(num, "") or ("Top floor" if floor == 5 else ""),
+            "tag": "", "tag_label": "",
         })
+        t = UNIT_TAGS.get(num)
+        if (t == "new" and s == "A") or (t == "sold" and s == "S"):
+            UNITS[-1].update(tag=t, tag_label=TAG_LABEL[t])
 
 AMENITIES = [
     {"title": "Heated indoor pool and sauna", "text": "Swim all year, whatever the weather is doing outside.", "img": "render-pool", "render": True},
-    {"title": "Rooftop observation deck", "text": "Open air seating above the Boulevard with ocean and bay views.", "img": "render-rooftop", "render": True},
     {"title": "Lobby", "text": "A finished, furnished lobby by HH Designers greets you and your guests.", "img": "lobby", "render": False},
     {"title": "Recreation room", "text": "Billiards, games and room to get together with neighbors and family.", "img": "render-rec", "render": True},
     {"title": "Business center", "text": "A conference room and a quiet place to work when the beach can wait.", "img": "render-conference", "render": True},
@@ -144,7 +151,7 @@ FAQ = [
     ("Are pets allowed?",
      "The building has a pet wash station. Pet rules are set by the condominium association, so ask the sales team for the current policy."),
     ("Can I tour the building?",
-     "Yes. Call 732-392-6688 or use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."),
+     "Yes. Use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."),
     ("I am working with a real estate agent. Is that okay?",
      "Yes. Buyers working with an agent are welcome. Have your agent contact the sales team to set up a showing."),
 ]
@@ -163,7 +170,6 @@ GALLERY = [
     ("living-3", "Living room with built in cabinetry", "Interiors", "Virtually staged"),
     ("front-bay", "Coastal Edge from above with the town and Barnegat Bay behind", "Building", ""),
     ("render-pool", "Rendering of the heated indoor pool", "Amenities", "Rendering"),
-    ("render-rooftop", "Rendering of the rooftop observation deck", "Amenities", "Rendering"),
     ("corner-street", "Coastal Edge seen from across the Boulevard", "Building", ""),
     ("render-rec", "Rendering of the recreation room", "Amenities", "Rendering"),
     ("aerial-town", "Aerial view of the beach, boardwalk and town", "Location", ""),

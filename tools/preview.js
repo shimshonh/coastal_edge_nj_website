@@ -31,12 +31,12 @@ async function settle(p) {
   let [c, p] = await mk({ ...devices['iPhone 13'], deviceScaleFactor: 2 });
   await p.goto(B + '/'); await snap(p, 'phone', 'home', 'Home page. Real drone photo, headline, and two clear buttons.');
   await to(p, '.intro'); await snap(p, 'phone', 'welcome', 'Welcome section with a real kitchen photo.');
-  await to(p, '.feature-grid', 150); await snap(p, 'phone', 'featured', 'Listed homes show their price. These three are the ones on the MLS.');
+  await to(p, '.meter', 90); await snap(p, 'phone', 'featured', 'The sold counter and the listed homes. These three are the ones on the MLS, so they show a price.');
   await to(p, '.rail', 150); await snap(p, 'phone', 'plans-rail', 'Floor plans swipe sideways. Each card shows size and how many are left.');
   await to(p, '.band', 64); await snap(p, 'phone', 'location', 'Location section with the beach aerial.');
   await to(p, '.amenity-grid', 150); await snap(p, 'phone', 'amenities', 'Amenities. Renderings are labeled as renderings.');
-  await p.goto(B + '/availability/'); await to(p, '.avail-stats', 90); await snap(p, 'phone', 'availability', 'Availability page. The whole building at a glance: green is available, orange is under contract, gray is sold.');
-  await to(p, '#unit-301', 90); await snap(p, 'phone', 'list', 'The list under it. Unlisted homes say "Request pricing" so buyers have to ask.');
+  await p.goto(B + '/availability/'); await to(p, '.meter', 90); await snap(p, 'phone', 'availability', 'Availability page. The sold counter, then the whole building at a glance: green is available, orange is under contract, gray is sold.');
+  await to(p, '#unit-404', 90); await snap(p, 'phone', 'list', 'The list under it. Unlisted homes say "Request pricing" so buyers have to ask. New listings get a "Just listed" tag.');
   await p.click('#unit-503 .u-num strong'); await p.waitForTimeout(300); await snap(p, 'phone', 'unit', 'Tap a home to see its plan and details. Price shows "On request" unless it is listed.');
   await p.click('#unit-modal [data-u-primary]'); await p.waitForTimeout(300);
   await p.fill('#lead-modal [name=name]', 'Jamie Buyer'); await p.fill('#lead-modal [name=phone]', '732-555-0100'); await p.fill('#lead-modal [name=email]', 'jamie@example.com');
@@ -52,14 +52,14 @@ async function settle(p) {
   await p.goto(B + '/faq/'); await snap(p, 'phone', 'faq', 'Questions and answers. This also helps Google show your answers in search.');
   await p.goto(B + '/contact/'); await to(p, '.form-card', 80); await snap(p, 'phone', 'tour', 'Schedule a tour form.');
   await p.goto(B + '/?chat=1'); await p.waitForTimeout(400); await snap(p, 'phone', 'chat', 'The AI assistant. It answers from your facts and collects name and contact for the sales team.');
-  await p.goto(B + '/'); await p.click('[data-menu-toggle]'); await p.waitForTimeout(300); await snap(p, 'phone', 'menu', 'Phone menu. Call and Schedule a tour stay at the bottom of every page.');
+  await p.goto(B + '/'); await p.click('[data-menu-toggle]'); await p.waitForTimeout(300); await snap(p, 'phone', 'menu', 'Phone menu. Get pricing and Schedule a tour stay at the bottom of every page.');
   await c.close();
 
   // desktop
   [c, p] = await mk({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.5 });
   await p.goto(B + '/'); await snap(p, 'desktop', 'home', 'Home page on a computer.');
   await to(p, '.feature-grid', 260); await snap(p, 'desktop', 'featured', 'Listed homes with prices.');
-  await p.goto(B + '/availability/'); await to(p, '.avail-stats', 110); await snap(p, 'desktop', 'availability', 'Availability page on a computer.');
+  await p.goto(B + '/availability/'); await to(p, '.meter', 110); await snap(p, 'desktop', 'availability', 'Availability page on a computer.');
   await p.goto(B + '/floor-plans/'); await to(p, '.filters', 110); await snap(p, 'desktop', 'plans', 'All floor plans with a bedroom filter.');
   await p.goto(B + '/floor-plans/plan-3/'); await snap(p, 'desktop', 'plan', 'One floor plan page.');
   await p.goto(B + '/gallery/'); await to(p, '.filters', 110); await snap(p, 'desktop', 'gallery', 'Gallery.');

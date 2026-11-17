@@ -2,7 +2,7 @@
 // Environment: ANTHROPIC_API_KEY (required), CHAT_MODEL (optional).
 const Anthropic = require('@anthropic-ai/sdk');
 const facts = require('../lib/facts.json');
-const { sendLead, limited, readJson } = require('../lib/lead');
+const { sendLead, contentFlags, sameSite, limited, readJson } = require('../lib/lead');
 
 const MODEL = process.env.CHAT_MODEL || 'claude-opus-5-5';
 let client;
@@ -10,7 +10,7 @@ let client;
 const SYSTEM = `You are the website assistant for Coastal Edge, a new condominium building at 401 Boulevard, Seaside Heights, New Jersey. You help visitors with questions about the building and help them reach the sales team.
 
 How to answer
-- Use only the FACTS below. If the answer is not there, say you are not sure and offer to connect the visitor with the sales team (phone ${facts.site.phone_display}, or the form at /contact/).
+- Use only the FACTS below. If the answer is not there, say you are not sure and offer to connect the visitor with the sales team: take their details yourself, or point them to the form at /contact/. There is no sales phone number to give out. If asked for one, say the team will call or email them back and offer to take their details.
 - Keep answers short: two to four plain sentences. No headings, no bullet lists unless listing residences, no emoji.
 - When it helps, point to a page on this site by its path, for example /availability/ or /floor-plans/plan-3/.
 - Prices: you may state a price only when the residence has a "listed_price" in FACTS. For any other residence say that pricing is available on request and offer to have the sales team send it. Never estimate, hint at, or compare prices that are not listed. Never negotiate or discuss discounts, credits or incentives.
@@ -45,14 +45,16 @@ const TOOLS = [{
   },
 }];
 
-const FALLBACK = `Sorry, I cannot help with that here. For anything about Coastal Edge, call ${facts.site.phone_display} or use the form at /contact/.`;
+const FALLBACK = `Sorry, I cannot help with that here. For anything about Coastal Edge, use the form at /contact/ or email ${facts.site.email}.`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.statusCode = 405; return res.end('Method not allowed'); }
   res.setHeader('Content-Type', 'application/json');
   try {
-    if (limited(req, 30, 10 * 60 * 1000)) { res.statusCode = 429; return res.end(JSON.stringify({ error: 'Too many requests.' })); }
+    if (limited(req, 30, 10 * 60 * 1000, 'chat')) { res.statusCode = 429; return res.end(JSON.stringify({ error: 'Too many requests.' })); }
     const body = await readJson(req);
+    // Each answer costs money, so only the chat box on this website may ask. Scripts and other sites are turned away.
+    if (Number(body.js) !== 1 || !sameSite(req)) { res.statusCode = 403; return res.end(JSON.stringify({ error: 'Not allowed.' })); }
     const messages = (Array.isArray(body.messages) ? body.messages : [])
       .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
       .slice(-12)
@@ -89,11 +91,11 @@ module.exports = async function handler(req, res) {
           result = await sendLead({
             kind: 'chat', name: i.name, email: i.email, phone: i.phone, unit: i.unit, plan: i.plan,
             interest: i.request, time: i.preferred_time, message: i.notes, page: body.page,
-          });
+          }, { flags: contentFlags({ name: i.name, message: i.notes }) });
           if (result.ok) leadSaved = true;
         }
         results.push({ type: 'tool_result', tool_use_id: use.id, is_error: !result.ok,
-          content: result.ok ? 'Saved. The sales team has the request.' : `Not saved: ${result.error} Ask the visitor to call ${facts.site.phone_display}.` });
+          content: result.ok ? 'Saved. The sales team has the request.' : `Not saved: ${result.error} Ask the visitor to check their details, or to use the form at /contact/.` });
       }
       messages.push({ role: 'user', content: results });
     }

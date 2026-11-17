@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 {% import "_m.html" as m with context %}
 {% block content %}
-{{ m.page_hero('Availability', 'Find your residence', 'Updated ' ~ site.updated ~ '. Tap any home to see its plan, size and status.', 'front-wide', 'Front of the Coastal Edge building') }}
+{{ m.page_hero('Availability', 'Find your residence', 'Tap any home to see its plan, size and status.', 'front-wide', 'Front of the Coastal Edge building') }}
 
 <section class="section">
   <div class="wrap">
-    <div class="avail-stats reveal">
-      <div><strong>{{ counts.A }}</strong><span><i class="dot dot-A"></i>Available</span></div>
-      <div><strong>{{ counts.U }}</strong><span><i class="dot dot-U"></i>Under contract</span></div>
-      <div><strong>{{ counts.S }}</strong><span><i class="dot dot-S"></i>Sold</span></div>
-    </div>
+    {{ m.sold_meter() }}
 
     <div class="stack reveal" aria-label="Building by floor">
       <div class="stack-head"><span></span>{% for p in plans %}<span>{{ '%02d'|format(p.n) }}</span>{% endfor %}</div>
@@ -19,12 +15,12 @@
         {% for p in plans %}
           {% set ns = namespace(u=None) %}
           {% for u in units if u.floor == floor and u.plan.n == p.n %}{% set ns.u = u %}{% endfor %}
-          {% if ns.u %}<button type="button" class="cell cell-{{ ns.u.status }}" data-unit-open="{{ ns.u.num }}" aria-label="Residence {{ ns.u.num }}, {{ ns.u.status_label }}">{{ ns.u.num }}</button>
+          {% if ns.u %}<button type="button" class="cell cell-{{ ns.u.status }}{{ ' cell-tag' if ns.u.tag }}" data-unit-open="{{ ns.u.num }}" aria-label="Residence {{ ns.u.num }}, {{ ns.u.status_label }}{{ ', ' ~ ns.u.tag_label if ns.u.tag }}">{{ ns.u.num }}</button>
           {% else %}<span class="cell cell-none" aria-hidden="true"></span>{% endif %}
         {% endfor %}
       </div>
       {% endfor %}
-      <p class="stack-note">Columns are floor plans 01 to 10. Plans 09 and 10 are on floors 4 and 5 only. Ocean side plans: 03 to 07.</p>
+      <p class="stack-note">Columns are floor plans 01 to 10. Plans 09 and 10 are on floors 4 and 5 only. Ocean side plans: 03 to 07. A dot marks a home that was just listed or recently sold.</p>
     </div>
 
     <div class="filters reveal" data-filters>
@@ -43,8 +39,8 @@
     <div class="unit-table" data-unit-list>
       <div class="unit-row unit-head" aria-hidden="true"><span>Residence</span><span>Layout</span><span>Interior</span><span>Deck</span><span>Exposure</span><span>Status</span><span>Price</span><span></span></div>
       {% for u in units|sort(attribute='num') %}
-      <div class="unit-row status-{{ u.status }}" data-beds="{{ u.plan.group }}" data-floor="{{ u.floor }}" data-status="{{ u.status }}" data-row-unit="{{ u.num }}" id="unit-{{ u.num }}">
-        <span class="u-num"><strong>{{ u.num }}</strong><small>Floor {{ u.floor }} <i>|</i> <a href="/floor-plans/{{ u.plan.slug }}/">{{ u.plan.name }}</a></small></span>
+      <div class="unit-row status-{{ u.status }}" data-beds="{{ u.plan.group }}" data-floor="{{ u.floor }}" data-status="{{ u.status }}" data-tag="{{ u.tag }}" data-row-unit="{{ u.num }}" id="unit-{{ u.num }}">
+        <span class="u-num"><strong>{{ u.num }}</strong>{{ m.flag(u) }}<small>Floor {{ u.floor }} <i>|</i> <a href="/floor-plans/{{ u.plan.slug }}/">{{ u.plan.name }}</a></small></span>
         <span class="u-lay">{{ u.plan.beds_label }}<small>{{ u.plan.baths_label }}</small></span>
         <span class="u-sf" data-l="Interior">{{ u.plan.sf|num }} sf</span>
         <span class="u-deck" data-l="Deck">{{ u.plan.deck }} sf</span>

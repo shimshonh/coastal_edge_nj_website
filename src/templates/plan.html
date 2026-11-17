@@ -31,7 +31,7 @@
         <ul class="plan-units">
           {% for u in plan.units|sort(attribute='num', reverse=true) %}
           <li class="status-{{ u.status }}">
-            <span><strong>{{ u.num }}</strong> <small>Floor {{ u.floor }}</small></span>
+            <span><strong>{{ u.num }}</strong> <small>Floor {{ u.floor }}</small>{{ m.flag(u) }}</span>
             {{ m.price_cell(u) }}
           </li>
           {% endfor %}

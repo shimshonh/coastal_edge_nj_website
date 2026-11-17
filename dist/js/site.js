@@ -8,6 +8,7 @@
   function track(event, data) { try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: event }, data || {})); } catch (e) {} }
   function money(n) { return '$' + Number(n).toLocaleString('en-US'); }
   function num(n) { return Number(n).toLocaleString('en-US'); }
+  var t0 = Date.now(); // forms report how long the page was open, which helps sort people from bots
 
   /* header */
   var header = $('[data-header]');
@@ -92,12 +93,12 @@
       if (!ok) { err.textContent = 'Please add your name and a valid email.'; err.hidden = false; return; }
       err.hidden = true;
       var data = {}; new FormData(form).forEach(function (v, k) { data[k] = v; });
-      data.url = location.href; data.referrer = d.referrer || '';
+      data.url = location.href; data.referrer = d.referrer || ''; data.js = 1; data.elapsed = Date.now() - t0;
       var label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending';
       fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { if (!r.ok) throw new Error('bad'); return r.json(); })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error('bad'); e.say = r.status === 400 && j.error; throw e; } return j; }); })
         .then(function () { store('ce_lead', '1'); track('lead_submit', { lead_kind: data.kind, unit: data.unit || '', plan: data.plan || '' }); showDone(form, false); })
-        .catch(function () { err.textContent = 'Sorry, that did not go through. Please try again or call ' + CE.phone + '.'; err.hidden = false; })
+        .catch(function (e) { err.textContent = e.say || 'Sorry, that did not go through. Please try again or email ' + CE.email + '.'; err.hidden = false; })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   });
@@ -145,7 +146,7 @@
     var apply = function () {
       var shown = 0;
       $$('.unit-row[data-status]', list).forEach(function (r) {
-        var ok = (f.beds === 'all' || r.dataset.beds === f.beds) && (f.floor === 'all' || r.dataset.floor === f.floor) && (f.sold || r.dataset.status !== 'S');
+        var ok = (f.beds === 'all' || r.dataset.beds === f.beds) && (f.floor === 'all' || r.dataset.floor === f.floor) && (f.sold || r.dataset.status !== 'S' || r.dataset.tag === 'sold');
         r.hidden = !ok; if (ok) shown++;
       });
       $('[data-empty]', list).hidden = shown > 0;
@@ -166,7 +167,7 @@
     $('[data-u-img]', um).src = '/img/plans/plan-' + p.n + '-900.webp'; $('[data-u-img]', um).alt = 'Floor plan for residence ' + u.num;
     $('[data-u-eyebrow]', um).textContent = 'Floor ' + u.floor + ' | ' + p.name;
     $('[data-u-title]', um).textContent = 'Residence ' + u.num;
-    $('[data-u-pill]', um).innerHTML = '<span class="pill pill-' + u.status + '">' + label + '</span>';
+    $('[data-u-pill]', um).innerHTML = '<span class="pill pill-' + u.status + '">' + label + '</span>' + (u.tag ? '<em class="flag flag-' + u.tag + '">' + (u.tag === 'new' ? 'Just listed' : 'Recently sold') + '</em>' : '');
     $('[data-u-layout]', um).textContent = p.beds_label + ', ' + p.baths_label;
     $('[data-u-sf]', um).textContent = num(p.sf) + ' sf'; $('[data-u-deck]', um).textContent = num(p.deck) + ' sf';
     $('[data-u-exp]', um).textContent = p.exposure_label;
@@ -184,9 +185,9 @@
     var panel = $('.chat-panel', chat), log = $('[data-chat-log]', chat), cform = $('[data-chat-form]', chat), chips = $('[data-chat-chips]', chat);
     var history = [], busy = false, greeted = false;
     var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-    var rich = function (s) { // only site paths and phone numbers become links
+    var rich = function (s) { // only site paths and the sales email become links
       return esc(s).replace(/(^|[\s(])(\/(?:availability|floor-plans|amenities|gallery|neighborhood|faq|contact|brochure)\/[a-z0-9\-\/]*)/g, '$1<a href="$2">$2</a>')
-        .replace(/\b(732-392-6688)\b/g, '<a href="tel:+17323926688">$1</a>');
+        .split(CE.email).join('<a href="mailto:' + CE.email + '">' + CE.email + '</a>');
     };
     var add = function (role, text, cls) { var m = d.createElement('div'); m.className = 'msg ' + (role === 'user' ? 'me' : 'bot') + (cls ? ' ' + cls : ''); m.innerHTML = role === 'user' ? esc(text) : rich(text); log.appendChild(m); log.scrollTop = log.scrollHeight; return m; };
     var setOpen = function (open) {
@@ -201,10 +202,10 @@
       text = (text || '').trim(); if (!text || busy) return;
       busy = true; chips.hidden = true; add('user', text); history.push({ role: 'user', content: text });
       var wait = add('assistant', 'Typing', 'typing');
-      fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), page: location.pathname }) })
+      fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), page: location.pathname, js: 1, elapsed: Date.now() - t0 }) })
         .then(function (r) { if (!r.ok) throw new Error('bad'); return r.json(); })
         .then(function (j) { wait.remove(); add('assistant', j.reply); history.push({ role: 'assistant', content: j.reply }); if (j.lead_saved) { store('ce_lead', '1'); track('lead_submit', { lead_kind: 'chat' }); } })
-        .catch(function () { wait.remove(); history.pop(); add('assistant', 'Sorry, I cannot answer right now. Please call ' + CE.phone + ' or use the form at /contact/ and the sales team will help you.'); })
+        .catch(function () { wait.remove(); history.pop(); add('assistant', 'Sorry, I cannot answer right now. Please use the form at /contact/ and the sales team will help you.'); })
         .then(function () { busy = false; });
     };
     cform.addEventListener('submit', function (e) { e.preventDefault(); var v = cform.q.value; cform.q.value = ''; send(v); });

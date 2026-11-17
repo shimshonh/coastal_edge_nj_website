@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% import "_m.html" as m with context %}
-{% block head %}<link rel="preload" as="image" href="/img/photos/hero-corner-1536.webp" imagesrcset="/img/photos/hero-corner-800.webp 800w, /img/photos/hero-corner-1536.webp 1536w" imagesizes="100vw" fetchpriority="high">{% endblock %}
+{% block head %}<link rel="preload" as="image" href="/img/photos/hero-1-1536.webp" imagesrcset="/img/photos/hero-1-800.webp 800w, /img/photos/hero-1-1536.webp 1536w" imagesizes="100vw" fetchpriority="high">{% endblock %}
 {% block content %}
 <section class="hero">
   <div class="hero-slides" data-hero>
-    {{ pic('hero-corner', 'Coastal Edge condominium building on the Boulevard in Seaside Heights, New Jersey', 'on', '100vw', false) }}
-    {{ pic('front-wide', 'Front of Coastal Edge with Barnegat Bay behind the building', '', '100vw') }}
-    {{ pic('aerial-beach', 'The beach and boardwalk one block from Coastal Edge', '', '100vw') }}
+    {{ pic('hero-1', 'Coastal Edge condominium building on the Boulevard in Seaside Heights, New Jersey', 'on', '100vw', false) }}
+    {{ pic('hero-2', 'Front of Coastal Edge with Barnegat Bay behind the building', '', '100vw') }}
+    {{ pic('hero-3', 'The beach and boardwalk one block from Coastal Edge', '', '100vw') }}
   </div>
   <div class="hero-shade"></div>
   <div class="wrap hero-in">
@@ -56,10 +56,11 @@
       </div>
       <a class="arrow-link" href="/availability/">See every residence</a>
     </div>
+    {{ m.sold_meter() }}
     <div class="feature-grid">
       {% for u in featured %}
       <article class="feature-card reveal">
-        <a class="feature-plan" href="/floor-plans/{{ u.plan.slug }}/">{{ pic('plan-' ~ u.plan.n, 'Floor plan for residence ' ~ u.num, '', '(min-width: 900px) 30vw, 90vw') }}</a>
+        <a class="feature-plan" href="/floor-plans/{{ u.plan.slug }}/">{{ pic('plan-' ~ u.plan.n, 'Floor plan for residence ' ~ u.num, '', '(min-width: 900px) 30vw, 90vw') }}{{ m.flag(u) }}</a>
         <div class="feature-body">
           <div class="feature-top"><h3>Residence {{ u.num }}</h3>{{ m.status_pill(u) }}</div>
           <p class="plan-line">{{ u.plan.beds_label }} <span>|</span> {{ u.plan.baths_label }} <span>|</span> {{ u.plan.sf|num }} sf</p>

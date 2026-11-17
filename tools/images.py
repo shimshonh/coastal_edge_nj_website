@@ -40,6 +40,36 @@ def tone(im, sky=False, warm=1.0, sat=1.12, lift=0.0):
     out = Image.fromarray((np.clip(a, 0, 1) * 255 + 0.5).astype(np.uint8))
     return out.filter(ImageFilter.UnsharpMask(radius=1.4, percent=55, threshold=2))
 
+def golden(im):
+    """Warm, late afternoon grade for the home page hero. Tone and colour only."""
+    a = np.asarray(tone(im, sky=False, warm=1.0, sat=1.06)).astype(np.float32) / 255.0
+    h, w = a.shape[:2]
+    yy = np.linspace(0, 1, h, dtype=np.float32)[:, None]
+    xx = np.linspace(0, 1, w, dtype=np.float32)[None, :]
+    lum = (a @ np.array([0.299, 0.587, 0.114], dtype=np.float32))
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    sky = ((b > r * 1.08) & (b > g * 1.01) & (b > 0.40)).astype(np.float32) * np.clip((0.60 - yy) / 0.10, 0, 1)
+    sky = np.asarray(Image.fromarray((sky * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(12))).astype(np.float32) / 255.0
+    # 1) warm white balance, stronger in the light parts than in the shadows
+    k = ((0.45 + 0.55 * lum) * (1 - 0.55 * sky))[..., None]
+    a = a * (1 + k * (np.array([1.085, 1.01, 0.86], dtype=np.float32) - 1))
+    # 2) sky: softer, less cold blue, with a peach glow toward the horizon
+    grey = (a @ np.array([0.299, 0.587, 0.114], dtype=np.float32))[..., None]
+    a = a + (grey - a) * (sky * 0.30)[..., None]
+    horizon = np.clip(1 - np.abs(yy - 0.40) / 0.34, 0, 1) ** 1.5
+    peach = np.array([1.0, 0.80, 0.60], dtype=np.float32)
+    m = (sky * horizon * 0.42)[..., None]
+    a = a * (1 - m) + (1 - (1 - a) * (1 - peach * 0.55)) * m
+    # 3) low sun from the upper right (screen blend)
+    d = np.sqrt(((xx - 0.92) * 1.15) ** 2 + (yy - 0.10) ** 2)
+    sun = (np.clip(1 - d / 0.95, 0, 1) ** 2 * 0.26)[..., None] * np.array([1.0, 0.76, 0.48], dtype=np.float32)
+    a = 1 - (1 - np.clip(a, 0, 1)) * (1 - sun)
+    # 4) a little more contrast and colour so it does not look washed
+    a = np.clip(a, 0, 1); a = a + 0.08 * (a - 0.5) * (1 - np.abs(2 * a - 1))
+    grey = (a @ np.array([0.299, 0.587, 0.114], dtype=np.float32))[..., None]
+    a = grey + (a - grey) * 1.08
+    return Image.fromarray((np.clip(a, 0, 1) * 255 + 0.5).astype(np.uint8))
+
 def save(im, name, widths=(1536, 800), q=80):
     for w in widths:
         r = im if im.width <= w else im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
@@ -65,14 +95,17 @@ for name, (fid, kw) in Z.items():
     save(tone(Image.open(os.path.join(SRC_Z, fid + '.jpg')), **kw), name)
 
 R = {  # artist renderings carried over from the current site (amenity spaces)
- 'render-pool': 'Frame-1102-1.png', 'render-rooftop': 'Frame-1102-2-1.png',
- 'render-rooftop-aerial': 'Frame-1108-2-1.png', 'render-rec': 'Frame-1108-1.png',
+ 'render-pool': 'Frame-1102-1.png',
+ 'render-rec': 'Frame-1108-1.png',
  'render-conference': 'Frame-1107-1.png', 'ocean': 'frs-1.jpg', 'map': 'Frame.png',
 }
 for name, f in R.items():
     im = Image.open(os.path.join(SRC_SITE, f)).convert('RGB')
     save(im, name, widths=(1400, 800), q=82)
+HERO = {'hero-1': '3a49d25fd215ad2526e0e54b259104b7', 'hero-2': 'ea5fec8c50afb979b0dea5d29d909acd', 'hero-3': 'fe72cc7beab6eb4989467a795acf3dd2'}
+for name, fid in HERO.items():
+    save(golden(Image.open(os.path.join(SRC_Z, fid + '.jpg'))), name)
 # social share image (JPG, 1200x630) from the hero photo
-im = tone(Image.open(os.path.join(SRC_Z, Z['hero-corner'][0] + '.jpg')), sky=True, warm=1.015)
+im = golden(Image.open(os.path.join(SRC_Z, HERO['hero-1'] + '.jpg')))
 w, h = im.size; th = round(w * 630 / 1200); top = (h - th) // 2
 im.crop((0, top, w, top + th)).resize((1200, 630), Image.LANCZOS).save(os.path.join(OUT, 'share.jpg'), quality=84)

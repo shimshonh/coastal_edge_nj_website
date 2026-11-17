@@ -1,14 +1,13 @@
 {
  "site": {
   "name": "Coastal Edge",
-  "phone_display": "732-392-6688",
   "email": "info@coastaledgenj.com",
   "street": "401 Boulevard",
   "city": "Seaside Heights",
   "state": "NJ",
   "zip": "08751",
   "tour_3d": "https://kuula.co/share/hfWdk/collection/7bf7K",
-  "updated": "November 2026"
+  "updated": "November 16, 2026"
  },
  "summary": "36 residences on floors 2 to 5 (floors 2 and 3 have plans 1 to 8, floors 4 and 5 have plans 1 to 10). Construction is complete and homes are ready for move in. One block from the beach and boardwalk.",
  "counts": {
@@ -243,7 +242,8 @@
    "unit": 405,
    "plan": "Plan 05",
    "status": "Available",
-   "listed_price": "$789,000"
+   "listed_price": "$789,000",
+   "note": "Just listed"
   },
   {
    "unit": 406,
@@ -297,13 +297,15 @@
    "unit": 504,
    "plan": "Plan 04",
    "status": "Available",
-   "listed_price": "$874,900"
+   "listed_price": "$874,900",
+   "note": "Just listed"
   },
   {
    "unit": 505,
    "plan": "Plan 05",
    "status": "Sold",
-   "listed_price": null
+   "listed_price": null,
+   "note": "Recently sold"
   },
   {
    "unit": 506,
@@ -426,7 +428,7 @@
   },
   {
    "q": "Can I tour the building?",
-   "a": "Yes. Call 732-392-6688 or use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."
+   "a": "Yes. Use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."
   },
   {
    "q": "I am working with a real estate agent. Is that okay?",

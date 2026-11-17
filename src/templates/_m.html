@@ -1,5 +1,22 @@
 {% macro status_pill(u) %}<span class="pill pill-{{ u.status }}">{{ u.status_label }}</span>{% endmacro %}
 
+{% macro flag(u) %}{% if u.tag %}<em class="flag flag-{{ u.tag }}">{{ u.tag_label }}</em>{% endif %}{% endmacro %}
+
+{% macro sold_meter() %}
+<div class="meter reveal">
+  <p class="meter-title"><strong>{{ counts.S }} of {{ total }}</strong> residences sold</p>
+  <div class="meter-bar" role="img" aria-label="{{ counts.S }} sold, {{ counts.U }} under contract, {{ counts.A }} available">
+    <i class="seg-S" style="width: {{ share.S }}%"></i><i class="seg-U" style="width: {{ share.U }}%"></i><i class="seg-A" style="width: {{ share.A }}%"></i>
+  </div>
+  <p class="meter-key">
+    <span><i class="dot seg-S"></i>{{ counts.S }} sold</span>
+    <span><i class="dot seg-U"></i>{{ counts.U }} under contract</span>
+    <span><i class="dot seg-A"></i>{{ counts.A }} available</span>
+    <span class="meter-date">Updated {{ site.updated }}</span>
+  </p>
+</div>
+{% endmacro %}
+
 {% macro price_cell(u) %}
 {% if u.status == 'A' and u.price %}<strong class="price">{{ u.price|money }}</strong>
 {% elif u.status == 'A' %}<button class="link-btn" type="button" data-inquire data-kind="pricing" data-unit="{{ u.num }}" data-plan="{{ u.plan.name }}">Request pricing</button>
@@ -42,7 +59,7 @@
   <div data-form-body>
     <input type="hidden" name="kind" value="{{ kind }}">
     <input type="hidden" name="page" value="{{ path }}">
-    <div class="hp" aria-hidden="true"><label>Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+    <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
     <div class="field-row">
       <label class="field"><span>Name</span><input name="name" type="text" autocomplete="name" required></label>
       <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>

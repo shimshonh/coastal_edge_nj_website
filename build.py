@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Builds the static site into dist/ and the facts file used by the chat assistant."""
-import json, os, shutil, datetime
+import json, os, shutil, datetime, hashlib
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from markupsafe import Markup
 from PIL import Image
@@ -50,7 +50,11 @@ def large(name):
 env = Environment(loader=FileSystemLoader(os.path.join(SRC, "templates")), autoescape=select_autoescape(["html"]),
                   trim_blocks=True, lstrip_blocks=True)
 env.filters.update(money=money, num=num)
-env.globals.update(pic=pic, large=large)
+def asset(path):
+    """Adds a short version to a css or js link so browsers pick up a new file right after a deploy."""
+    return path + "?v=" + hashlib.md5(open(os.path.join(SRC, "static", path.lstrip("/")), "rb").read()).hexdigest()[:8]
+
+env.globals.update(pic=pic, large=large, asset=asset)
 
 units = D.UNITS
 counts = {k: sum(1 for u in units if u["status"] == k) for k in "AUS"}
@@ -58,15 +62,17 @@ for p in D.PLANS:
     p["units"] = [u for u in units if u["plan"]["n"] == p["n"]]
     p["available"] = sum(1 for u in p["units"] if u["status"] == "A")
 featured = [u for u in units if u["price"]]
+total = len(units)
+share = {k: round(100 * counts[k] / total, 2) for k in "AUS"}
 
 ADDRESS = {"@type": "PostalAddress", "streetAddress": S["street"], "addressLocality": S["city"],
            "addressRegion": S["state"], "postalCode": S["zip"], "addressCountry": "US"}
 ORG = {"@type": "RealEstateAgent", "@id": S["domain"] + "/#sales", "name": "Coastal Edge Sales",
-       "url": S["domain"] + "/", "telephone": S["phone_tel"], "email": S["email"], "address": ADDRESS,
+       "url": S["domain"] + "/", "email": S["email"], "address": ADDRESS,
        "image": S["domain"] + "/img/photos/share.jpg", "sameAs": [S["facebook"], S["instagram"], S["tiktok"]]}
 BUILDING = {"@type": "ApartmentComplex", "@id": S["domain"] + "/#building", "name": "Coastal Edge",
             "description": "New two and three bedroom condominiums one block from the beach and boardwalk in Seaside Heights, New Jersey.",
-            "url": S["domain"] + "/", "address": ADDRESS, "telephone": S["phone_tel"],
+            "url": S["domain"] + "/", "address": ADDRESS,
             "image": [S["domain"] + large("hero-corner"), S["domain"] + large("front-wide"), S["domain"] + large("kitchen")],
             "numberOfBedrooms": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3},
             "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": a, "value": True} for a in D.AMENITY_LIST],
@@ -79,7 +85,7 @@ def crumbs(*items):
 def ld(*nodes): return Markup(json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False))
 
 client_units = [{"num": u["num"], "floor": u["floor"], "plan": u["plan"]["n"], "status": u["status"],
-                 "price": u["price"], "note": u["note"]} for u in units]
+                 "price": u["price"], "note": u["note"], "tag": u["tag"]} for u in units]
 client_plans = [{k: p[k] for k in ("n", "slug", "name", "beds_label", "baths_label", "sf", "deck", "total", "exposure_label", "group")} for p in D.PLANS]
 
 PAGES = []
@@ -118,7 +124,7 @@ page("/faq/", "faq.html", "Questions and Answers | Coastal Edge Condos Seaside H
      ld(crumbs(("FAQ", "/faq/")), {"@type": "FAQPage", "mainEntity": [
          {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in D.FAQ]}))
 page("/contact/", "contact.html", "Schedule a Tour | Contact Coastal Edge, Seaside Heights NJ",
-     "Schedule a private tour of Coastal Edge at 401 Boulevard, Seaside Heights. Call 732-392-6688 or send a message and the sales team will confirm a time.",
+     "Schedule a private tour of Coastal Edge at 401 Boulevard, Seaside Heights. Pick a day, send the form and the sales team will confirm a time.",
      ld(crumbs(("Contact", "/contact/")), ORG))
 page("/brochure/", "brochure.html", "Download the Brochure | Coastal Edge Condos",
      "Get the Coastal Edge brochure with floor plans, amenities and the neighborhood. Tell us where to send it and download it right away.",
@@ -128,7 +134,7 @@ page("/404.html", "404.html", "Page Not Found | Coastal Edge", "This page could 
 
 if os.path.exists(DIST): shutil.rmtree(DIST)
 shutil.copytree(os.path.join(SRC, "static"), DIST)
-common = dict(site=S, nav=D.NAV, plans=D.PLANS, units=units, counts=counts, featured=featured, amenities=D.AMENITIES,
+common = dict(site=S, nav=D.NAV, plans=D.PLANS, units=units, counts=counts, total=total, share=share, featured=featured, amenities=D.AMENITIES,
               amenity_list=D.AMENITY_LIST, finishes=D.FINISHES, nearby=D.NEARBY, drives=D.DRIVES, faq=D.FAQ,
               gallery=D.GALLERY, gallery_by={g[0]: g for g in D.GALLERY}, year=datetime.date.today().year,
               client_data=Markup(json.dumps({"units": client_units, "plans": client_plans}, separators=(",", ":"))))
@@ -149,13 +155,13 @@ open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDis
 
 # Facts for the chat assistant. Public information only.
 facts = {
-    "site": {k: S[k] for k in ("name", "phone_display", "email", "street", "city", "state", "zip", "tour_3d", "updated")},
+    "site": {k: S[k] for k in ("name", "email", "street", "city", "state", "zip", "tour_3d", "updated")},
     "summary": "36 residences on floors 2 to 5 (floors 2 and 3 have plans 1 to 8, floors 4 and 5 have plans 1 to 10). Construction is complete and homes are ready for move in. One block from the beach and boardwalk.",
     "counts": {"available": counts["A"], "under_contract": counts["U"], "sold": counts["S"]},
     "plans": [{"plan": p["name"], "bedrooms": p["beds_label"], "baths": p["baths"], "interior_sqft": p["sf"], "deck_sqft": p["deck"],
                "exposure": p["exposure_label"], "floors": p["floors"], "page": f"/floor-plans/{p['slug']}/"} for p in D.PLANS],
     "units": [{"unit": u["num"], "plan": u["plan"]["name"], "status": u["status_label"],
-               "listed_price": money(u["price"]) if u["price"] else None} for u in units],
+               "listed_price": money(u["price"]) if u["price"] else None, **({"note": u["tag_label"]} if u["tag"] else {})} for u in units],
     "amenities": D.AMENITY_LIST, "finishes": D.FINISHES,
     "nearby": [f"{a} ({b})" for a, b in D.NEARBY], "drives": [f"{a}: {b}" for a, b in D.DRIVES],
     "faq": [{"q": q, "a": a} for q, a in D.FAQ],
