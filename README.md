@@ -52,7 +52,7 @@ Every form and the assistant go through the checks in `lib/lead.js`. No outside 
 - Emailed with `[Possible spam]` at the start of the subject: sent within 3 seconds of opening the page, sent from outside the website, links or sales pitch wording in the message, a name that is not a name, a phone number that cannot be real. Make a mail filter on that subject to keep these out of the main inbox.
 - Each visitor is limited to 8 forms and 30 assistant questions per 10 minutes. The assistant only answers requests that come from the chat box on this website.
 
-The site shows no phone number. Visitors reach the sales team through the forms, the assistant or the email address in the footer.
+The sales phone number is set once, in `sitedata.py` (`phone_display` and `phone_tel`). It shows in the footer, on the contact page, in the phone menu and in the FAQ, and the assistant gives it when asked.
 
 ## Checks
 

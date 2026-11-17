@@ -9,6 +9,8 @@ SITE = {
     "name": "Coastal Edge",
     "domain": "https://coastaledgenj.com",
     "tagline": "New condominiums one block from the beach",
+    "phone_display": "732-330-6651",
+    "phone_tel": "+17323306651",
     "email": "info@coastaledgenj.com",
     "street": "401 Boulevard",
     "city": "Seaside Heights",
@@ -151,7 +153,7 @@ FAQ = [
     ("Are pets allowed?",
      "The building has a pet wash station. Pet rules are set by the condominium association, so ask the sales team for the current policy."),
     ("Can I tour the building?",
-     "Yes. Use the schedule a tour form and the sales team will confirm a time. You can also walk through the 3D tour online."),
+     "Yes. Use the schedule a tour form or call 732-330-6651 and the sales team will confirm a time. You can also walk through the 3D tour online."),
     ("I am working with a real estate agent. Is that okay?",
      "Yes. Buyers working with an agent are welcome. Have your agent contact the sales team to set up a showing."),
 ]

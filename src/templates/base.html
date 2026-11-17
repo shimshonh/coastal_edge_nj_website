@@ -59,7 +59,7 @@
   </nav>
   <div class="mobile-menu-foot">
     <a class="btn btn-clay" href="/contact/">Schedule a tour</a>
-    <p>{{ site.street }}, {{ site.city }}, {{ site.state }} {{ site.zip }}</p>
+    <p>Call <a href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a><br>{{ site.street }}, {{ site.city }}, {{ site.state }} {{ site.zip }}</p>
   </div>
 </div>
 
@@ -87,7 +87,7 @@
     <div>
       <img class="footer-logo" src="/img/brand/logo-white.png" width="720" height="99" alt="Coastal Edge" loading="lazy">
       <p class="footer-addr">{{ site.street }}<br>{{ site.city }}, {{ site.state }} {{ site.zip }}</p>
-      <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p><a href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a><br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       <p class="social">
         <a href="{{ site.instagram }}" rel="noopener" target="_blank">Instagram</a>
         <a href="{{ site.facebook }}" rel="noopener" target="_blank">Facebook</a>
@@ -198,7 +198,7 @@
   </section>
 </div>
 
-<script>window.CE = {{ client_data }}; window.CE.tour = "{{ site.tour_3d }}"; window.CE.email = "{{ site.email }}";</script>
+<script>window.CE = {{ client_data }}; window.CE.tour = "{{ site.tour_3d }}"; window.CE.email = "{{ site.email }}"; window.CE.phone = "{{ site.phone_display }}"; window.CE.tel = "{{ site.phone_tel }}";</script>
 <script src="{{ asset('/js/site.js') }}" defer></script>
 {% if site.gtm_id %}
 <script>

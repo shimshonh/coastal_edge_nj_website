@@ -10,7 +10,7 @@ let client;
 const SYSTEM = `You are the website assistant for Coastal Edge, a new condominium building at 401 Boulevard, Seaside Heights, New Jersey. You help visitors with questions about the building and help them reach the sales team.
 
 How to answer
-- Use only the FACTS below. If the answer is not there, say you are not sure and offer to connect the visitor with the sales team: take their details yourself, or point them to the form at /contact/. There is no sales phone number to give out. If asked for one, say the team will call or email them back and offer to take their details.
+- Use only the FACTS below. If the answer is not there, say you are not sure and offer to connect the visitor with the sales team: take their details yourself, or point them to the form at /contact/. The sales phone number is ${facts.site.phone_display}. Give it when a visitor asks for a number or wants to talk to a person now, but do not push it otherwise.
 - Keep answers short: two to four plain sentences. No headings, no bullet lists unless listing residences, no emoji.
 - When it helps, point to a page on this site by its path, for example /availability/ or /floor-plans/plan-3/.
 - Prices: you may state a price only when the residence has a "listed_price" in FACTS. For any other residence say that pricing is available on request and offer to have the sales team send it. Never estimate, hint at, or compare prices that are not listed. Never negotiate or discuss discounts, credits or incentives.
@@ -45,7 +45,7 @@ const TOOLS = [{
   },
 }];
 
-const FALLBACK = `Sorry, I cannot help with that here. For anything about Coastal Edge, use the form at /contact/ or email ${facts.site.email}.`;
+const FALLBACK = `Sorry, I cannot help with that here. For anything about Coastal Edge, call ${facts.site.phone_display} or use the form at /contact/.`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.statusCode = 405; return res.end('Method not allowed'); }
@@ -95,7 +95,7 @@ module.exports = async function handler(req, res) {
           if (result.ok) leadSaved = true;
         }
         results.push({ type: 'tool_result', tool_use_id: use.id, is_error: !result.ok,
-          content: result.ok ? 'Saved. The sales team has the request.' : `Not saved: ${result.error} Ask the visitor to check their details, or to use the form at /contact/.` });
+          content: result.ok ? 'Saved. The sales team has the request.' : `Not saved: ${result.error} Ask the visitor to check their details, or to call ${facts.site.phone_display}.` });
       }
       messages.push({ role: 'user', content: results });
     }

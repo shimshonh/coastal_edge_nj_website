@@ -68,11 +68,11 @@ share = {k: round(100 * counts[k] / total, 2) for k in "AUS"}
 ADDRESS = {"@type": "PostalAddress", "streetAddress": S["street"], "addressLocality": S["city"],
            "addressRegion": S["state"], "postalCode": S["zip"], "addressCountry": "US"}
 ORG = {"@type": "RealEstateAgent", "@id": S["domain"] + "/#sales", "name": "Coastal Edge Sales",
-       "url": S["domain"] + "/", "email": S["email"], "address": ADDRESS,
+       "url": S["domain"] + "/", "telephone": S["phone_tel"], "email": S["email"], "address": ADDRESS,
        "image": S["domain"] + "/img/photos/share.jpg", "sameAs": [S["facebook"], S["instagram"], S["tiktok"]]}
 BUILDING = {"@type": "ApartmentComplex", "@id": S["domain"] + "/#building", "name": "Coastal Edge",
             "description": "New two and three bedroom condominiums one block from the beach and boardwalk in Seaside Heights, New Jersey.",
-            "url": S["domain"] + "/", "address": ADDRESS,
+            "url": S["domain"] + "/", "address": ADDRESS, "telephone": S["phone_tel"],
             "image": [S["domain"] + large("hero-corner"), S["domain"] + large("front-wide"), S["domain"] + large("kitchen")],
             "numberOfBedrooms": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3},
             "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": a, "value": True} for a in D.AMENITY_LIST],
@@ -124,7 +124,7 @@ page("/faq/", "faq.html", "Questions and Answers | Coastal Edge Condos Seaside H
      ld(crumbs(("FAQ", "/faq/")), {"@type": "FAQPage", "mainEntity": [
          {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in D.FAQ]}))
 page("/contact/", "contact.html", "Schedule a Tour | Contact Coastal Edge, Seaside Heights NJ",
-     "Schedule a private tour of Coastal Edge at 401 Boulevard, Seaside Heights. Pick a day, send the form and the sales team will confirm a time.",
+     "Schedule a private tour of Coastal Edge at 401 Boulevard, Seaside Heights. Pick a day and send the form, or call " + S["phone_display"] + ", and the sales team will confirm a time.",
      ld(crumbs(("Contact", "/contact/")), ORG))
 page("/brochure/", "brochure.html", "Download the Brochure | Coastal Edge Condos",
      "Get the Coastal Edge brochure with floor plans, amenities and the neighborhood. Tell us where to send it and download it right away.",
@@ -155,7 +155,7 @@ open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDis
 
 # Facts for the chat assistant. Public information only.
 facts = {
-    "site": {k: S[k] for k in ("name", "email", "street", "city", "state", "zip", "tour_3d", "updated")},
+    "site": {k: S[k] for k in ("name", "phone_display", "email", "street", "city", "state", "zip", "tour_3d", "updated")},
     "summary": "36 residences on floors 2 to 5 (floors 2 and 3 have plans 1 to 8, floors 4 and 5 have plans 1 to 10). Construction is complete and homes are ready for move in. One block from the beach and boardwalk.",
     "counts": {"available": counts["A"], "under_contract": counts["U"], "sold": counts["S"]},
     "plans": [{"plan": p["name"], "bedrooms": p["beds_label"], "baths": p["baths"], "interior_sqft": p["sf"], "deck_sqft": p["deck"],

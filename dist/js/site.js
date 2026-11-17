@@ -98,7 +98,7 @@
       fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error('bad'); e.say = r.status === 400 && j.error; throw e; } return j; }); })
         .then(function () { store('ce_lead', '1'); track('lead_submit', { lead_kind: data.kind, unit: data.unit || '', plan: data.plan || '' }); showDone(form, false); })
-        .catch(function (e) { err.textContent = e.say || 'Sorry, that did not go through. Please try again or email ' + CE.email + '.'; err.hidden = false; })
+        .catch(function (e) { err.textContent = e.say || 'Sorry, that did not go through. Please try again or call ' + CE.phone + '.'; err.hidden = false; })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   });
@@ -185,9 +185,10 @@
     var panel = $('.chat-panel', chat), log = $('[data-chat-log]', chat), cform = $('[data-chat-form]', chat), chips = $('[data-chat-chips]', chat);
     var history = [], busy = false, greeted = false;
     var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-    var rich = function (s) { // only site paths and the sales email become links
+    var rich = function (s) { // only site paths, the sales email and the sales phone become links
       return esc(s).replace(/(^|[\s(])(\/(?:availability|floor-plans|amenities|gallery|neighborhood|faq|contact|brochure)\/[a-z0-9\-\/]*)/g, '$1<a href="$2">$2</a>')
-        .split(CE.email).join('<a href="mailto:' + CE.email + '">' + CE.email + '</a>');
+        .split(CE.email).join('<a href="mailto:' + CE.email + '">' + CE.email + '</a>')
+        .split(CE.phone).join('<a href="tel:' + CE.tel + '">' + CE.phone + '</a>');
     };
     var add = function (role, text, cls) { var m = d.createElement('div'); m.className = 'msg ' + (role === 'user' ? 'me' : 'bot') + (cls ? ' ' + cls : ''); m.innerHTML = role === 'user' ? esc(text) : rich(text); log.appendChild(m); log.scrollTop = log.scrollHeight; return m; };
     var setOpen = function (open) {
@@ -205,7 +206,7 @@
       fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), page: location.pathname, js: 1, elapsed: Date.now() - t0 }) })
         .then(function (r) { if (!r.ok) throw new Error('bad'); return r.json(); })
         .then(function (j) { wait.remove(); add('assistant', j.reply); history.push({ role: 'assistant', content: j.reply }); if (j.lead_saved) { store('ce_lead', '1'); track('lead_submit', { lead_kind: 'chat' }); } })
-        .catch(function () { wait.remove(); history.pop(); add('assistant', 'Sorry, I cannot answer right now. Please use the form at /contact/ and the sales team will help you.'); })
+        .catch(function () { wait.remove(); history.pop(); add('assistant', 'Sorry, I cannot answer right now. Please call ' + CE.phone + ' or use the form at /contact/ and the sales team will help you.'); })
         .then(function () { busy = false; });
     };
     cform.addEventListener('submit', function (e) { e.preventDefault(); var v = cform.q.value; cform.q.value = ''; send(v); });

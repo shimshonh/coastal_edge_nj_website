@@ -22,6 +22,7 @@
     <aside class="contact-side">
       <figure>{{ pic('hero-corner', 'Coastal Edge building at 401 Boulevard', '', '(min-width: 900px) 40vw, 92vw', false) }}</figure>
       <dl class="contact-list">
+        <div><dt>Call</dt><dd><a href="tel:{{ site.phone_tel }}">{{ site.phone_display }}</a></dd></div>
         <div><dt>Email</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd></div>
         <div><dt>Visit</dt><dd>{{ site.street }}<br>{{ site.city }}, {{ site.state }} {{ site.zip }}<br><a href="{{ site.maps_url }}" target="_blank" rel="noopener">Get directions</a></dd></div>
       </dl>

@@ -46,8 +46,8 @@ const check = (ok, label, extra) => console.log((ok ? 'PASS ' : 'FAIL ') + label
 
   script = [{ stop_reason: 'refusal', content: [] }];
   r = await call(chat, { ...human, messages: [{ role: 'user', content: 'x' }] });
-  check(r.body.reply.includes('/contact/') && !/\d{3}-\d{3}-\d{4}/.test(r.body.reply), 'a declined request points to the form, with no phone number');
-  check(!/\d{3}-\d{3}-\d{4}/.test(sys.split('FACTS')[0]) && !sys.includes('phone_display'), 'the assistant has no sales phone number to give out');
+  check(r.body.reply.includes('/contact/') && r.body.reply.includes('732-330-6651'), 'a declined request points to the form and the sales phone number');
+  check(sys.includes('732-330-6651') && !sys.includes('392-6688'), 'the assistant knows the sales phone number, and only that one');
   r = await call(chat, { ...human, messages: [] });
   check(r.status === 400, 'empty chat request is rejected');
   let before = calls.length;
