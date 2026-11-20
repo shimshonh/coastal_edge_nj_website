@@ -129,6 +129,8 @@ page("/contact/", "contact.html", "Schedule a Tour | Contact Coastal Edge, Seasi
 page("/brochure/", "brochure.html", "Download the Brochure | Coastal Edge Condos",
      "Get the Coastal Edge brochure with floor plans, amenities and the neighborhood. Tell us where to send it and download it right away.",
      ld(crumbs(("Brochure", "/brochure/"))))
+page("/owners/", "owners.html", "Owner Portal | Coastal Edge, Seaside Heights NJ",
+     "Coastal Edge owners: sign in to pay association dues, send a maintenance request or contact building management.", None, noindex=True)
 page("/thank-you/", "thankyou.html", "Thank You | Coastal Edge", "Thank you for contacting Coastal Edge.", None, noindex=True)
 page("/404.html", "404.html", "Page Not Found | Coastal Edge", "This page could not be found.", None, noindex=True)
 

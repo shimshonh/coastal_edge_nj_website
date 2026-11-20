@@ -26,6 +26,10 @@ SITE = {
     "gtm_id": "GTM-W3TSTBMQ",
     # Owner login for residents: Townsmen's pay online page, which links to their AppFolio owner login.
     "owner_portal": "https://townsmen.co/payonline/",
+    "manager": "Townsmen Properties",
+    "manager_phone": "732-988-0048",
+    "manager_tel": "+17329880048",
+    "manager_email": "general@townsmen.co",
     "updated": "November 16, 2026",
 }
 

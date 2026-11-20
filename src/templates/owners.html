@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% set hide_cta = true %}
+{% block content %}
+<section class="plain-hero"><div class="wrap"><p class="eyebrow">Owner portal</p><h1>Welcome home</h1><p>Coastal Edge is managed by {{ site.manager }}. Sign in to your owner account to pay association dues, send a maintenance request and see building notices.</p></div></section>
+<section class="section tight">
+  <div class="wrap contact-grid">
+    <div class="form-card portal-card">
+      <span class="portal-lock" aria-hidden="true"></span>
+      <h2>Sign in to your account</h2>
+      <p class="muted">Your owner account is run by {{ site.manager }}. The button opens their secure sign in page in a new tab.</p>
+      <a class="btn btn-clay btn-block" href="{{ site.owner_portal }}" target="_blank" rel="noopener nofollow">Sign in</a>
+      <p class="fineprint">First time? Use the email address you gave management at closing. If you need access, contact {{ site.manager }} below.</p>
+    </div>
+    <aside>
+      <ul class="portal-links">
+        <li><a href="{{ site.owner_portal }}" target="_blank" rel="noopener nofollow"><strong>Pay association dues</strong><span>Sign in and choose Pay online</span></a></li>
+        <li><a href="{{ site.owner_portal }}" target="_blank" rel="noopener nofollow"><strong>Maintenance request</strong><span>Sign in and choose Maintenance</span></a></li>
+        <li><a href="tel:{{ site.manager_tel }}"><strong>Call management</strong><span>{{ site.manager }}, {{ site.manager_phone }}</span></a></li>
+        <li><a href="mailto:{{ site.manager_email }}"><strong>Email management</strong><span>{{ site.manager_email }}</span></a></li>
+      </ul>
+      <p class="fineprint">For fire or medical emergencies, call 911.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}
