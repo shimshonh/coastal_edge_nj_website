@@ -155,7 +155,7 @@ open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDis
 
 # Facts for the chat assistant. Public information only.
 facts = {
-    "site": {k: S[k] for k in ("name", "phone_display", "email", "street", "city", "state", "zip", "tour_3d", "updated")},
+    "site": {k: S[k] for k in ("name", "phone_display", "email", "street", "city", "state", "zip", "tour_3d", "updated", "owner_portal")},
     "summary": "36 residences on floors 2 to 5 (floors 2 and 3 have plans 1 to 8, floors 4 and 5 have plans 1 to 10). Construction is complete and homes are ready for move in. One block from the beach and boardwalk.",
     "counts": {"available": counts["A"], "under_contract": counts["U"], "sold": counts["S"]},
     "plans": [{"plan": p["name"], "bedrooms": p["beds_label"], "baths": p["baths"], "interior_sqft": p["sf"], "deck_sqft": p["deck"],

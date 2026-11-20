@@ -24,6 +24,8 @@ SITE = {
     "instagram": "https://www.instagram.com/coastaledgenj/",
     "tiktok": "https://www.tiktok.com/@coastaledgenj",
     "gtm_id": "GTM-W3TSTBMQ",
+    # Owner login for residents. Townsmen manages the building on AppFolio; this is their AppFolio portal address.
+    "owner_portal": "https://townsmenproperties.appfolio.com/connect",
     "updated": "November 16, 2026",
 }
 
