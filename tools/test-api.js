@@ -31,8 +31,10 @@ const check = (ok, label, extra) => console.log((ok ? 'PASS ' : 'FAIL ') + label
   const p = calls[0];
   check(p.model === 'claude-opus-5-5' && p.output_config.effort === 'low' && p.fallbacks === 'default', 'request settings', p.model + ' ' + p.betas);
   const sys = p.system[0].text;
-  const stripped = sys.split('$789,000').join('').split('$899,000').join('').split('$874,900').join('');
-  check(!/\$\d{3},\d{3}|\$1,\d{3},\d{3}/.test(stripped), 'only the three listed prices are in the assistant facts', 'prompt is ' + sys.length + ' characters');
+  // The only prices allowed in the assistant are the listed ones (units with a listed_price in facts.json).
+  const listed = require(path.join(root, 'lib/facts.json')).units.map((u) => u.listed_price).filter(Boolean);
+  const stripped = listed.reduce((t, pr) => t.split(pr).join(''), sys);
+  check(listed.length >= 1 && !/\$\d{3},\d{3}|\$1,\d{3},\d{3}/.test(stripped), 'only listed prices are in the assistant facts', listed.join(' ') + ' | prompt is ' + sys.length + ' characters');
 
   script = [
     { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'save_lead', input: { name: 'Dana Lee', email: 'dana@gmail.com', request: 'pricing', unit: '503', notes: 'Wants price for 503' } }] },
