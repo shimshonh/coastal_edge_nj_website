@@ -32,7 +32,11 @@
   if (hero && !reduce) {
     var slides = $$('img', hero), cur = 0;
     slides.forEach(function (s) { s.loading = 'eager'; });
-    setInterval(function () { slides[cur].classList.remove('on'); cur = (cur + 1) % slides.length; slides[cur].classList.add('on'); }, 7000);
+    setInterval(function () {
+      var out = slides[cur]; out.classList.add('off'); out.classList.remove('on');
+      setTimeout(function () { out.classList.remove('off'); }, 1300); // reset only once it is invisible
+      cur = (cur + 1) % slides.length; slides[cur].classList.add('on');
+    }, 5500);
   }
 
   /* dialogs */

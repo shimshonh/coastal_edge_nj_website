@@ -94,9 +94,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* hero */
 .hero { position: relative; min-height: min(100svh, 980px); display: flex; flex-direction: column; justify-content: flex-end; color: #fff; background: #3a2a1e; overflow: hidden; }
 .hero-slides, .hero-slides img, .hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero-slides img { object-fit: cover; object-position: 50% 60%; opacity: 0; transition: opacity 1.6s ease; transform: scale(1.02); }
-.hero-slides img.on { opacity: 1; animation: drift 16s ease-out both; }
-@keyframes drift { from { transform: scale(1.1); } to { transform: scale(1.02); } }
+/* Each slide pushes in slowly while it shows. The outgoing slide keeps moving (class off) while it fades, so nothing jumps. */
+.hero-slides img { object-fit: cover; object-position: 50% 55%; opacity: 0; transition: opacity 1.2s ease; transform: scale(1); }
+.hero-slides img.on, .hero-slides img.off { animation: drift 7s linear both; }
+.hero-slides img.on { opacity: 1; }
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.06); } }
 .hero-shade { background: linear-gradient(90deg, rgba(43, 30, 20, .62) 0%, rgba(43, 30, 20, .38) 34%, rgba(43, 30, 20, 0) 66%), linear-gradient(180deg, rgba(43, 30, 20, .4) 0%, rgba(43, 30, 20, 0) 22%, rgba(43, 30, 20, .08) 55%, rgba(38, 27, 19, .72) 100%); }
 .hero-in { position: relative; padding-top: 150px; padding-bottom: clamp(28px, 5vh, 56px); }
 .hero h1 { color: #fff; font-size: clamp(2.5rem, 5.6vw, 4.5rem); max-width: 22ch; text-shadow: 0 2px 30px rgba(0, 0, 0, .35); }

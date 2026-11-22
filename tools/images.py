@@ -103,7 +103,7 @@ for name, f in R.items():
     im = Image.open(os.path.join(SRC_SITE, f)).convert('RGB')
     save(im, name, widths=(1400, 800), q=82)
 # Home page slides. The first is the listing's virtual twilight photo, already warm, so it only gets the light tone.
-HERO = {'hero-1': '7ad2dda0bbd229f5b32933b3ac0102e4', 'hero-2': '6fbaf91e5324bb1d726a471081447910', 'hero-3': 'fe72cc7beab6eb4989467a795acf3dd2'}
+HERO = {'hero-1': '7ad2dda0bbd229f5b32933b3ac0102e4', 'hero-2': '97b0cb6e096eca7b83a016028235e4d2', 'hero-3': 'b5d469f0c4251da25f0d7cbdfd831276'}
 for name, fid in HERO.items():
     src = Image.open(os.path.join(SRC_Z, fid + '.jpg'))
     save(tone(src, warm=1.0, sat=1.04) if name == 'hero-1' else golden(src), name)
