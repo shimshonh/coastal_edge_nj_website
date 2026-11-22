@@ -30,7 +30,7 @@ SITE = {
     "manager_phone": "732-988-0048",
     "manager_tel": "+17329880048",
     "manager_email": "general@townsmen.co",
-    "updated": "November 16, 2026",
+    "updated": "November 22, 2026",
 }
 
 EXPOSURE = {
@@ -76,14 +76,14 @@ _STATUS = {
     5: "AAAASASSSA",
 }
 
-# Only units that are publicly listed AND available. Source: MLS, checked 11/16/2026.
-PUBLIC_PRICES = {207: 899000, 405: 789000, 504: 874900}
+# Only units that are publicly listed AND available. Source: MLS, checked 11/16/2026; 502 listed 11/21/2026 (MLS 22636606).
+PUBLIC_PRICES = {207: 899000, 405: 789000, 502: 768900, 504: 874900}
 UNIT_NOTES = {504: "Top floor"}
 
 # Tags on the unit list. Use them only for real, recent events and clear them after a month or so.
 # "new" = Just listed (must be available). "sold" = Recently sold (must be sold).
-# 405 relisted 11/13/2026. 504 listed on the MLS in November 2026. 505 closed 11/6/2026.
-UNIT_TAGS = {405: "new", 504: "new", 505: "sold"}
+# 405 relisted 11/13/2026. 502 listed 11/21/2026. 504 listed on the MLS in November 2026. 505 closed 11/6/2026.
+UNIT_TAGS = {405: "new", 502: "new", 504: "new", 505: "sold"}
 TAG_LABEL = {"new": "Just listed", "sold": "Recently sold"}
 
 STATUS_LABEL = {"A": "Available", "U": "Under contract", "S": "Sold"}
@@ -166,19 +166,18 @@ FAQ = [
 
 GALLERY = [
     # file, alt, category, tag
-    ("hero-corner", "Coastal Edge condominium building at the corner of the Boulevard in Seaside Heights", "Building", ""),
-    ("front-wide", "Front of the Coastal Edge building with Barnegat Bay behind it", "Building", ""),
+    ("front-wide", "Coastal Edge at dusk on the Boulevard, with Barnegat Bay behind", "Building", "Virtual twilight"),
+    ("hero-corner", "Coastal Edge entrance and signage at the corner of the Boulevard in Seaside Heights", "Building", ""),
     ("kitchen", "Kitchen with waterfall island, gas range and stainless steel appliances", "Interiors", ""),
     ("living-2", "Open living room and kitchen with sliding doors to the deck", "Interiors", "Virtually staged"),
     ("aerial-beach", "Aerial view from the ocean over the beach and boardwalk toward Coastal Edge and the bay", "Location", ""),
     ("lobby", "Furnished lobby at Coastal Edge", "Interiors", ""),
-    ("corner-bay", "Aerial view of Coastal Edge with the bay in the distance", "Building", ""),
     ("living-1", "Living room with sliding glass doors and a view toward the ocean", "Interiors", "Virtually staged"),
     ("pendant", "Pendant light over the kitchen island", "Interiors", ""),
     ("living-3", "Living room with built in cabinetry", "Interiors", "Virtually staged"),
     ("front-bay", "Coastal Edge from above with the town and Barnegat Bay behind", "Building", ""),
     ("render-pool", "Rendering of the heated indoor pool", "Amenities", "Rendering"),
-    ("corner-street", "Coastal Edge seen from across the Boulevard", "Building", ""),
+    ("corner-street", "Coastal Edge from above at the corner of the Boulevard", "Building", ""),
     ("render-rec", "Rendering of the recreation room", "Amenities", "Rendering"),
     ("aerial-town", "Aerial view of the beach, boardwalk and town", "Location", ""),
     ("render-conference", "Rendering of the conference room", "Amenities", "Rendering"),

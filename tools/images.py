@@ -77,10 +77,10 @@ def save(im, name, widths=(1536, 800), q=80):
     print(name, im.size)
 
 Z = {
- 'hero-corner':   ('3a49d25fd215ad2526e0e54b259104b7', dict(sky=True, warm=1.015)),
- 'front-wide':    ('ea5fec8c50afb979b0dea5d29d909acd', dict(sky=True, warm=1.015)),
- 'front-bay':     ('bdf06378eeaef8585bd6f98b4a57899a', dict(sky=True, warm=1.01)),
- 'corner-bay':    ('0efde532a0440158f444e5341da0c305', dict(sky=True, warm=1.01)),
+ # Building photos from the 502 listing (MLS 22636606, November 2026): finished signage and storefronts.
+ 'hero-corner':   ('f422b016f7878d429e4072dec139777a', dict(sky=True, warm=1.015)),
+ 'front-wide':    ('7ad2dda0bbd229f5b32933b3ac0102e4', dict(warm=1.0, sat=1.04)),   # virtual twilight
+ 'front-bay':     ('97b0cb6e096eca7b83a016028235e4d2', dict(sky=True, warm=1.015)),
  'corner-street': ('6fbaf91e5324bb1d726a471081447910', dict(sky=True, warm=1.015)),
  'aerial-beach':  ('fe72cc7beab6eb4989467a795acf3dd2', dict(sky=True, warm=1.01)),
  'aerial-town':   ('b5d469f0c4251da25f0d7cbdfd831276', dict(sky=True, warm=1.015)),
@@ -102,10 +102,12 @@ R = {  # artist renderings carried over from the current site (amenity spaces)
 for name, f in R.items():
     im = Image.open(os.path.join(SRC_SITE, f)).convert('RGB')
     save(im, name, widths=(1400, 800), q=82)
-HERO = {'hero-1': '3a49d25fd215ad2526e0e54b259104b7', 'hero-2': 'ea5fec8c50afb979b0dea5d29d909acd', 'hero-3': 'fe72cc7beab6eb4989467a795acf3dd2'}
+# Home page slides. The first is the listing's virtual twilight photo, already warm, so it only gets the light tone.
+HERO = {'hero-1': '7ad2dda0bbd229f5b32933b3ac0102e4', 'hero-2': '6fbaf91e5324bb1d726a471081447910', 'hero-3': 'fe72cc7beab6eb4989467a795acf3dd2'}
 for name, fid in HERO.items():
-    save(golden(Image.open(os.path.join(SRC_Z, fid + '.jpg'))), name)
+    src = Image.open(os.path.join(SRC_Z, fid + '.jpg'))
+    save(tone(src, warm=1.0, sat=1.04) if name == 'hero-1' else golden(src), name)
 # social share image (JPG, 1200x630) from the hero photo
-im = golden(Image.open(os.path.join(SRC_Z, HERO['hero-1'] + '.jpg')))
+im = tone(Image.open(os.path.join(SRC_Z, HERO['hero-1'] + '.jpg')), warm=1.0, sat=1.04)
 w, h = im.size; th = round(w * 630 / 1200); top = (h - th) // 2
 im.crop((0, top, w, top + th)).resize((1200, 630), Image.LANCZOS).save(os.path.join(OUT, 'share.jpg'), quality=84)
